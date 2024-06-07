@@ -1,0 +1,273 @@
+---
+title: "Premiers pas avec R"
+format: html
+editor: visual
+copyright: "Barthélémy DURETTE 2024 tous droits réservés"
+---
+
+------------------------------------------------------------------------
+
+# Introduction
+
+------------------------------------------------------------------------
+
+### Bienvenue dans ce premier module de la formation "Introduction au logiciel R".
+
+Nous y verrons :
+
+1.  **Comment réaliser des opérations arithmétiques élémentaires avec R ?**
+
+2.  **Comment visualiser un tableau de données avec R ?**
+
+3.  **Comment réaliser des opérations arithmétiques élémentaires sur ce tableau de données ?**
+
+Vous apprendrez à utiliser **\$,** le premier symbole indispensable à connaître pour utiliser R.
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+## 1-Realiser des opérations arithmétiques élémentaires avec R
+
+R peut à minima être utilisé comme une grosse calculatrice. Additions, soustractions, multiplication et divisions s'écrivent de la manière suivante (cliquez sur la flèches verte en haut à gauche de chaque cellule pour afficher le resultat) :
+
+Addition
+
+```{r}
+# Addition
+1+1
+```
+
+Soustraction
+
+```{r}
+# Soustraction
+1-1
+```
+
+Multiplication
+
+```{r}
+# Multiplication
+2*2
+```
+
+Division
+
+```{r}
+# Division
+4/2
+```
+
+Pour la fonction puissance, on utilise le symbole **\^**
+
+```{r}
+# Puissance
+2^3
+```
+
+Pour la racine carré, on peut soit utiliser la fonction **sqrt**, soit la puissance 1/2
+
+```{r}
+# Racine carrée avec la fonction sqrt
+sqrt(16)
+
+# Racine carrée avec le symbole de puissance
+16^(1/2)
+
+```
+
+R propose également toutes les fonctions trigonometriques,
+
+```{r}
+# Cosinus
+cos(20)
+
+# Sinus
+sin(10)
+
+# Tangente
+tan(10)
+
+# Arc tangente
+atan(10)
+```
+
+Et les fonctions logarithmiques :
+
+```{r}
+
+# Logarithme népérien (base e)
+log(1)
+
+# Logarithme en base 10 avec la fonction log10
+log10(10)
+
+# Logarithme en base 10 avec la fonction log
+log(10, base = 10)
+```
+
+Voilà pour un premier aperçu des fonctions les plus classiques.
+
+------------------------------------------------------------------------
+
+### *Exercice d'application*
+
+Calculez le logarithme en base 10 du sinus de 8 à la puissance 3
+
+```{r}
+# Ecrivez votre formule en dessous de cette ligne :
+
+
+
+
+
+
+```
+
+Vous trouvez : **-1.099532 ? Bravo ! Sinon, cherchez l'erreur...**
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+## 2-Visualiser un tableau de données avec R
+
+R dispose de quelques jeu de données préinstallées et prêtes à être utilisées :
+
+1.  mtcars : sur les voitures
+
+2.  iris : sur les plantes
+
+3.  ToothGrowth : sur les dents
+
+4.  PlantGrowth : sur les plantes aussi
+
+5.  USArrest : sur les crimes
+
+Pour en savoir plus sur ces jeux de données, vous pouvez utiliser la fonction **help** qui s'affiche dans un onglet séparé de Rstudio
+
+```{r}
+help("ToothGrowth")
+```
+
+Pour accéder aux jeux de données il sufit de taper leur nom. Mais si vous faites ça (allez-y !), R affiche par défaut tout le jeu de données (les 150 lignes). Dur de s'y retrouver. Voici quelques fonctions utiles pour prendre connaissance d'un jeu de données.
+
+La fonction **dim** vous donne les dimensions du tableau. Ici 150 lignes et 5 colonnes
+
+```{r}
+# La fonction dim
+dim(iris)
+
+```
+
+La fonction **names** vous donne le nom des colonnes du tableau :
+
+```{r}
+# La fonction names
+names(iris)
+```
+
+Enfin la fonction **head** vous donne un "aperçu" des 10 premieres colonnes du tableau
+
+```{r}
+head(iris)
+```
+
+------------------------------------------------------------------------
+
+### *Exercice d'application :*
+
+Choisissez l'un des jeux de données de R puis :
+
+-   Interrogez l'aide pour avoir des informations générales sur le jeu de données
+
+-   Trouvez le nombre de lignes et de colonnes du jeu de données
+
+-   Trouvez les noms des colonnes du jeu de données
+
+```{r}
+# Ecrivez votre code ici :
+
+
+
+
+
+
+
+```
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+## 3-Comment réaliser des opérations arithmétiques élémentaires sur ce tableau de données ?
+
+Entrons maintenant dans le vif du sujet. Comment utiliser R pour manipuler et faire des opérations élémentaires sur ces données ?
+
+|                                                                                                                           |
+|---------------------------------------------------------------------------------------------------------------------------|
+| **Le premier des quatre symboles indispensables à connaitre pour utiliser R est le symbole "\$" (money, money, money !)** |
+
+Le symbole \$ sert à sélectionner une colonne d'un tableau. Par exemple si je souhaite récupérer la colonne "Sepal.Length" du dataset "iris", j'écrirai iris**\$**Species.
+
+```{r}
+# Récupéraiton de la colonne Sepal.Length du dataset iris
+iris$Sepal.Length
+```
+
+------------------------------------------------------------------------
+
+### *Exercice d'application :*
+
+Calculez la longueur de iris\$Sepal.Length et affichez seulement les 5 premières valeurs
+
+```{r}
+#Ecrivez votre réponse ici :
+
+
+```
+
+------------------------------------------------------------------------
+
+Il est ensuite possible de faire directement des opérations arithmétiques sur ces vecteurs, comme par exemple :
+
+La multiplication par un scalaire,
+
+```{r}
+# Multiplier par quatre la colonne Petal.Lenght du dataset iris
+4 * iris$Petal.Length
+```
+
+le calcul du sinus :
+
+```{r}
+# Prendre le sinus de la colonne Petal.Lenght du dataset iris
+sin(iris$Petal.Length)
+```
+
+Il est également possible de faire de opérations entre les colonnes du tableau, par exemple : **sommer deux colonnes**,
+
+```{r}
+# Somme de la colonne Petal.Length et Sepal.Length
+iris$Petal.Length + iris$Sepal.Length
+```
+
+calculer **le produit scalaire** de deux colonnes :
+
+```{r}
+# Produit scalaire de la colonne Petal.Length et Sepal.Length
+iris$Petal.Length * iris$Sepal.Length
+```
+
+------------------------------------------------------------------------
+
+### *Exercice d'application :*
+
+Calculez le sinus de la somme des colonnes Petal.Length et Sepal.Length du dataset iris
+
+```{r}
+#Ecrivez votre réponse ici :
+
+
+```

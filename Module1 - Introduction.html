@@ -57,16 +57,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="test_files/libs/clipboard/clipboard.min.js"></script>
-<script src="test_files/libs/quarto-html/quarto.js"></script>
-<script src="test_files/libs/quarto-html/popper.min.js"></script>
-<script src="test_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="test_files/libs/quarto-html/anchor.min.js"></script>
-<link href="test_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="test_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="test_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="test_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="test_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="Module1 - Introduction_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Module1 - Introduction_files/libs/quarto-html/quarto.js"></script>
+<script src="Module1 - Introduction_files/libs/quarto-html/popper.min.js"></script>
+<script src="Module1 - Introduction_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Module1 - Introduction_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Module1 - Introduction_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Module1 - Introduction_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Module1 - Introduction_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Module1 - Introduction_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Module1 - Introduction_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -106,6 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>Comment visualiser un tableau de données avec R ?</strong></p></li>
 <li><p><strong>Comment réaliser des opérations arithmétiques élémentaires sur ce tableau de données ?</strong></p></li>
 </ol>
+<p>Vous apprendrez à utiliser <strong>$,</strong> le premier symbole indispensable à connaître pour utiliser R.</p>
 <hr>
 <hr>
 </section>
@@ -210,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 <section id="exercice-dapplication" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-dapplication">Exercice d’application</h2>
+<h2 class="anchored" data-anchor-id="exercice-dapplication"><em>Exercice d’application</em></h2>
 <p>Calculez le logarithme en base 10 du sinus de 8 à la puissance 3</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre formule en dessous de cette ligne :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -266,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 <section id="exercice-dapplication-1" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-dapplication-1">Exercice d’application :</h2>
+<h2 class="anchored" data-anchor-id="exercice-dapplication-1"><em>Exercice d’application :</em></h2>
 <p>Choisissez l’un des jeux de données de R puis :</p>
 <ul>
 <li><p>Interrogez l’aide pour avoir des informations générales sur le jeu de données</p></li>
@@ -280,9 +281,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 <section id="comment-réaliser-des-opérations-arithmétiques-élémentaires-sur-ce-tableau-de-données" class="level2">
-<h2 class="anchored" data-anchor-id="comment-réaliser-des-opérations-arithmétiques-élémentaires-sur-ce-tableau-de-données">Comment réaliser des opérations arithmétiques élémentaires sur ce tableau de données ?</h2>
+<h2 class="anchored" data-anchor-id="comment-réaliser-des-opérations-arithmétiques-élémentaires-sur-ce-tableau-de-données">3-Comment réaliser des opérations arithmétiques élémentaires sur ce tableau de données ?</h2>
 <p>Entrons maintenant dans le vif du sujet. Comment utiliser R pour manipuler et faire des opérations élémentaires sur ces données ?</p>
-<p><strong>Le premier des quatre symboles indispensables à connaitre pour utiliser R est le symbole “$” (money, money, money !)</strong></p>
+<table class="table">
+<colgroup>
+<col style="width: 100%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Le premier des quatre symboles indispensables à connaitre pour utiliser R est le symbole “$” (money, money, money !)</strong></td>
+</tr>
+</tbody>
+</table>
 <p>Le symbole $ sert à sélectionner une colonne d’un tableau. Par exemple si je souhaite récupérer la colonne “Sepal.Length” du dataset “iris”, j’écrirai iris<strong>$</strong>Species.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Récupéraiton de la colonne Sepal.Length du dataset iris</span></span>
@@ -299,15 +309,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [145] 6.7 6.7 6.3 6.5 6.2 5.9</code></pre>
 </div>
 </div>
+<hr>
 </section>
-<section id="exercice" class="level2">
-<h2 class="anchored" data-anchor-id="exercice">Exercice :</h2>
+<section id="exercice-dapplication-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-dapplication-2"><em>Exercice d’application :</em></h2>
 <p>Calculez la longueur de iris$Sepal.Length et affichez seulement les 5 premières valeurs</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Ecrivez votre réponse ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<hr>
 <p>Il est ensuite possible de faire directement des opérations arityhmétiques sur ces vecteurs, comme par exemple :</p>
-<p>La multiplication par un scalaire</p>
+<p>La multiplication par un scalaire,</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiplier par quatre la colonne Petal.Lenght du dataset iris</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="sc">*</span> iris<span class="sc">$</span>Petal.Length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -324,7 +336,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [136] 24.4 22.4 22.0 19.2 21.6 22.4 20.4 20.4 23.6 22.8 20.8 20.0 20.8 21.6 20.4</code></pre>
 </div>
 </div>
-<p>Ou le sinus :</p>
+<p>le calcul du sinus :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prendre le sinus de la colonne Petal.Lenght du dataset iris</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sin</span>(iris<span class="sc">$</span>Petal.Length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -356,10 +368,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [145] -0.5506855 -0.8834547 -0.9589243 -0.8834547 -0.7727645 -0.9258147</code></pre>
 </div>
 </div>
+<p>Il est également possible de faire de opérations entre les colonnes du tableau, par exemple : <strong>sommer deux colonnes</strong>,</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Somme de la colonne Petal.Length et Sepal.Length</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>Petal.Length <span class="sc">+</span> iris<span class="sc">$</span>Sepal.Length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1]  6.5  6.3  6.0  6.1  6.4  7.1  6.0  6.5  5.8  6.4  6.9  6.4  6.2  5.4  7.0
+ [16]  7.2  6.7  6.5  7.4  6.6  7.1  6.6  5.6  6.8  6.7  6.6  6.6  6.7  6.6  6.3
+ [31]  6.4  6.9  6.7  6.9  6.4  6.2  6.8  6.3  5.7  6.6  6.3  5.8  5.7  6.6  7.0
+ [46]  6.2  6.7  6.0  6.8  6.4 11.7 10.9 11.8  9.5 11.1 10.2 11.0  8.2 11.2  9.1
+ [61]  8.5 10.1 10.0 10.8  9.2 11.1 10.1  9.9 10.7  9.5 10.7 10.1 11.2 10.8 10.7
+ [76] 11.0 11.6 11.7 10.5  9.2  9.3  9.2  9.7 11.1  9.9 10.5 11.4 10.7  9.7  9.5
+ [91]  9.9 10.7  9.8  8.3  9.8  9.9  9.9 10.5  8.1  9.8 12.3 10.9 13.0 11.9 12.3
+[106] 14.2  9.4 13.6 12.5 13.3 11.6 11.7 12.3 10.7 10.9 11.7 12.0 14.4 14.6 11.0
+[121] 12.6 10.5 14.4 11.2 12.4 13.2 11.0 11.0 12.0 13.0 13.5 14.3 12.0 11.4 11.7
+[136] 13.8 11.9 11.9 10.8 12.3 12.3 12.0 10.9 12.7 12.4 11.9 11.3 11.7 11.6 11.0</code></pre>
+</div>
+</div>
+<p>calculer <strong>le produit scalaire</strong> de deux colonnes :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Produit scalaire de la colonne Petal.Length et Sepal.Length</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>Petal.Length <span class="sc">*</span> iris<span class="sc">$</span>Sepal.Length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1]  7.14  6.86  6.11  6.90  7.00  9.18  6.44  7.50  6.16  7.35  8.10  7.68
+ [13]  6.72  4.73  6.96  8.55  7.02  7.14  9.69  7.65  9.18  7.65  4.60  8.67
+ [25]  9.12  8.00  8.00  7.80  7.28  7.52  7.68  8.10  7.80  7.70  7.35  6.00
+ [37]  7.15  6.86  5.72  7.65  6.50  5.85  5.72  8.00  9.69  6.72  8.16  6.44
+ [49]  7.95  7.00 32.90 28.80 33.81 22.00 29.90 25.65 29.61 16.17 30.36 20.28
+ [61] 17.50 24.78 24.00 28.67 20.16 29.48 25.20 23.78 27.90 21.84 28.32 24.40
+ [73] 30.87 28.67 27.52 29.04 32.64 33.50 27.00 19.95 20.90 20.35 22.62 30.60
+ [85] 24.30 27.00 31.49 27.72 22.96 22.00 24.20 28.06 23.20 16.50 23.52 23.94
+ [97] 23.94 26.66 15.30 23.37 37.80 29.58 41.89 35.28 37.70 50.16 22.05 45.99
+[109] 38.86 43.92 33.15 33.92 37.40 28.50 29.58 33.92 35.75 51.59 53.13 30.00
+[121] 39.33 27.44 51.59 30.87 38.19 43.20 29.76 29.89 35.84 41.76 45.14 50.56
+[133] 35.84 32.13 34.16 46.97 35.28 35.20 28.80 37.26 37.52 35.19 29.58 40.12
+[145] 38.19 34.84 31.50 33.80 33.48 30.09</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="exercice-dapplication-3" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-dapplication-3"><em>Exercice d’application :</em></h2>
+<p>Calculez le sinus de la somme des colonnes Petal.Length et Sepal.Length du dataset iris</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Ecrivez votre réponse ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 </section>
 
-</main>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Copyright</h2><div id="quarto-copyright" class="quarto-appendix-contents"><div>Barthélémy DURETTE 2024 tous droits réservés</div></div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
