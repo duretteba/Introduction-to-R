@@ -133,7 +133,7 @@ Vous trouvez : **-1.099532 ? Bravo ! Sinon, cherchez l'erreur...**
 
 ## 2-Visualiser un tableau de données avec R
 
-R dispose de quelques jeu de données préinstallées et prêtes à être utilisées :
+R dispose de jeux de données préinstallées et prêtes à être utilisées dont les plus utilisés sont :
 
 1.  mtcars : sur les voitures
 
@@ -145,7 +145,7 @@ R dispose de quelques jeu de données préinstallées et prêtes à être utilis
 
 5.  USArrest : sur les crimes
 
-Pour en savoir plus sur ces jeux de données, vous pouvez utiliser la fonction **help** qui s'affiche dans un onglet séparé de Rstudio
+Pour en savoir plus sur ces jeux de données, vous pouvez utiliser la fonction **help** qui s'affiche dans un onglet séparé de Rstudio. La fonction **data()** vous donne accès à l'ensemble des jeux de données préinstallés.
 
 ```{r}
 help("ToothGrowth")

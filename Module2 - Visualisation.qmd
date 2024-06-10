@@ -278,3 +278,16 @@ Dans ce module, nous avons vu comment utiliser la librairie graphique ggplot2 po
 -   Nous avons vu comment **personnaliser un graphique** pour le rendre plus attrayant
 
 -   Nous avons vu comment **asservir un ou plusieurs parametres du graphique aux données** pour mieux illustrer un phénomène
+
+------------------------------------------------------------------------
+
+### Exercice d'application final :
+
+A l'aide du package ggplot2 et du dataset PantGrowth, reproduisez le schema ci-desous correspondant à des boîtes à moustache (boxplot en anglais)
+
+![](images/clipboard-2580280418.png)
+
+```{r}
+# Ecrivez votre code ici : 
+
+```

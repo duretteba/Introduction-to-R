@@ -1,0 +1,265 @@
+---
+title: "Premiers pas avec R"
+format: html
+editor: visual
+copyright: "Barthélémy DURETTE 2024 tous droits réservés"
+---
+
+------------------------------------------------------------------------
+
+# Manipuler des données avec R
+
+------------------------------------------------------------------------
+
+### Bienvenue dans ce troisième module de la formation "Introduction au logiciel R".
+
+Nous y verrons :
+
+1.  **Comment selectionner lignes d'un tableau de données**
+
+2.  **Comment selectionner les colonnes d'un tableau de données**
+
+3.  **Comment ajouter de nouvelles variables à un tableau de données**
+
+Dans ce module, vous apprendrez également à utiliser le **package tidyverse et le symbôle "pipe"** : **%\>%**
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+## Préambule : le package tidyverse
+
+La librairie Tidyverse a marqué un tournant dans l'histoire du logiciel R. Ce package qui regroupe en réalité un ensemble de librairies fonctionnant de concert a changer la manière de programmer dans R. On est passé d'une programmation dite fonctionnelle à une programmation en tunnel (pipe). Il a également permis de définir un jeu de fonctions très utiles pour la manipulation des données. Nous commencerons donc par son installation. Cela peut prendre un certain temps.
+
+Par ailleurs, le package ggplot2 est nécessaire
+
+```{r}
+install.packages("tidyverse")
+library(tidyverse)
+library(ggplot2)
+
+```
+
+Pour nous former à la manipulation de données, nous allons prendre comme un exemple un tableau de plus de 50 000 lignes qu'il serait difficile de manipuler dans un tableur classique.
+
+Il s'agit du jeu de données "diamonds" dont les caractéristiques sont les suivantes :
+
+```{r}
+help("diamonds")
+```
+
+## 1 Sélectionner les lignes d'un tableau
+
+On appelle aussi cela un "**filtre**" car il s'agit de conserver uniquement les lignes vérifiant une condition logique. Prenons par exemple la qualité de la coupe du diamant : la variable cut.
+
+La variable **cut** est un **facteur** ventilant les diamants selon 5 modalités :
+
+```{r}
+levels(diamonds$cut)
+```
+
+On peut d'ailleurs dénombrer les diamants en fonction de ce facteur avec la fonction **table()**
+
+```{r}
+table(diamonds$cut)
+```
+
+Pour filtrer un jeu de données, on utilisera la fonction **filter()**. En paramètre de cette fonction, on fournira la condition logique que l'on souhaite, par exemple :
+
+-   **cut == "Fair"** pour conserver uniquement les diamants de qualité de coupe "Fair"
+
+```{r}
+# Restriction du tableau aux diamants dont la coupe est "Fair"
+
+diamonds %>% filter(cut == "Fair")
+```
+
+-   **cut != "Fair"** pour conserver uniquement les diamants dont la qualité de coupe n'est pas Fair.
+
+```{r}
+# Restriction du tableau aux diamants dont la coupe n'est pas "Fair"
+
+diamonds %>% filter(cut != "Fair")
+```
+
+-   **cut %in% c("Fair","Good")** pour avoir tous les diamants de la classe Fair ou Good
+
+```{r}
+# Restriction du tableau aux diamants dont la coupe est "Fair" ou "Good"
+
+diamonds %>% filter(cut %in% c("Fair","Good"))
+```
+
+**Au passage, vous venez de faire connaissance :**
+
+-   avec le symbôle **pipe %\>%**
+
+-   avec le symbôle **%in%**
+
+-   avec la fonction **c()**
+
+------------------------------------------------------------------------
+
+### Exercice d'acquisition :
+
+```         
+Dans vos propres termes, décrivez ici en quelques lignes à quoi correspondent ces trois nouveaux éléments de code R :
+
+Le symbôle %>% ...
+
+
+
+Le symbôle %in% ...
+
+
+
+La fonction c() ...
+
+
+```
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+### Exercice d'application :
+
+On peut appliquer un filtre sur n'importe quelle variable, même si elle n'est pas un facteur. On peut par exemple appliquer un filtre sur une variable numérique.
+
+Filtrez le tableau de données diamonds pour ne conserver que les diamants d'une valeur supérieure à 15 000\$
+
+```{r}
+# Ecrivez votre code ici :
+
+  
+```
+
+**Combien de diamants on un prix supérieur à 15 000\$ ?**
+
+------------------------------------------------------------------------
+
+## 2 Sélectionner les colonnes d'un tableau
+
+Le package Tidyverse fournit également une fonction très utile pour sélectionner les colonnes d'un tableau : la fonction **select().** Cette fonction permet par exemple de sélectionner :
+
+-   Une ou plusieurs colonnes **par leur nom**
+
+-   Toutes les colonnes **sauf une ou plusieurs**
+
+-   Toutes les colonnes **commençant ou finissant par le même préfixe** (resp. suffixe)
+
+-   Toutes les colonnes **contenant une chaîne de caractère**
+
+-   etc. (voir toutes les possibilités dans l'aide de la fonction select)
+
+Voici quelques exemples :
+
+**Sélection d'un sous-ensemble de colonnes par leur nom**
+
+```{r}
+#Selection des colonnes Cut, Clarity et Price
+
+diamonds %>% select(cut, clarity, price)  
+
+#Remarque : les noms des colonnes ne sont pas entre guillemets
+
+```
+
+**Sélection de toutes les colonnes sauf certaines par leur nom :**
+
+```{r}
+# Selection des colonnes Cut, Clarity et Price en utilisant le symbole -
+
+diamonds %>% select(-cut, -clarity, -price)  
+
+# Selection des colonnes Cut, Clarity et Price en utilisant le symbole ! et la fonction c()
+
+diamonds %>% select(!c(cut, clarity, price))  
+
+
+```
+
+**Sélection de toutes les colonnes commençant par une chaîne de caractère donnée :**
+
+```{r}
+# Selection de toutes les colonnes commençant par la lettre "c"
+
+diamonds %>% select(starts_with("c")) # la chaine de caractère est entre guillements
+```
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+### Exercice d'application :
+
+A partir du dataset diamonds, créez un tableau contenant uniquement les dimensions (x,y et z) ainsi que le prix des diamants ayant une découpe (cut) idéale (Ideal)
+
+```{r}
+# Ecrivez votre code ici :
+
+  
+```
+
+**Quelles sont les dimensions de ce nouveau jeu de données ?**
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+### **3 Ajouter de nouvelles variables à un tableau de données**
+
+En analyse de données, il est fréquent d'avoir à calculer des variables intermédiaires, aussi appelée "features" en data mining. C'est notamment le cas lorsque les variables de départ nécessitent d'être combinées pour correspondre à une valeur intéressante du point de vue de l'analyse.
+
+Par exemple, le dataset diamonds donne la **taille des diamants dans les trois dimensions de l'espace** (variables x, y, z). Prises individuellement, ces variables ont peut d'intérêt. Il est en revanche possible de les combiner pour obtenir **une estimation du volume des diamants**.
+
+Ce que l'on souhaite ici, c'est calculer le volume estimatif des diamants et d'**ajouter cette valeur au tableau de données** pour pouvoir s'en servir par la suite. On utilise pour cela la fonction **mutate()**
+
+```{r}
+# Ajout de la colonne "volume" au dataset diamonds avec la fonction mutate
+
+diamonds %>% mutate(volume = x * y * z)  #le nom de la colonne n'est pas entre guillemets
+```
+
+On peut ensuite utiliser cette nouvelle colonne dans la suite des opérations, par exemple pour afficher le poids des diamants en fonction de l'estimation de leur volume :
+
+```{r}
+# Scatter plot du poids des diamants en fonction de leur volume
+
+diamonds %>% mutate(volume = x * y * z) %>% 
+  ggplot() +                                  # Attention à ne pas confondre le + de ggplot et %>%
+  geom_point(aes(x=volume, y = carat))
+```
+
+**Quelquechose vous surprend dans le graphique obtenu ? A quoi est-ce dû selon vous ?**
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+### Exercice d'application :
+
+A partir du dataset diamonds :
+
+1.  calculez le volume estimatif des diamants à part de leurs dimensions x, y et z
+
+2.  filtrez les diamants ayant un volume inférieur à 10 mm3 ou supérieur à 1000 mm3
+
+3.  visualiser le prix des diamants (price) en fonction de leur volume
+
+4.  asservissez la couleur des points du graphique à la clarté (clarity) des diamants
+
+```{r}
+# Ecrivez votre code ici :
+
+  
+```
+
+**Quelle clarté de diamant est la plus appréciée des acheteurs ?**
+
+Proposez une visualisation plus claire pour illustrer cette tendance à l'aide de la géométrie histogramme vue précédemment.
+
+```{r}
+# Ecrivez votre code ici :
+
+```
