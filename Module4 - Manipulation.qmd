@@ -1,0 +1,145 @@
+---
+title: "Premiers pas avec R"
+format: html
+editor: visual
+copyright: "Barthélémy DURETTE 2024 tous droits réservés"
+---
+
+------------------------------------------------------------------------
+
+# Manipuler des tableaux avec R
+
+------------------------------------------------------------------------
+
+### Bienvenue dans ce quatrième module de la formation "Introduction au logiciel R".
+
+La librairie Tidyverse, déjà utilisée dans le module 3 pour manipuler les colonnes et les lignes d'un tableau, propose également des fonctions puissantes pour transformer directement un tableau de donnée en un autre tableau, évitant parfois de nombreuses étapes fastidieuses.
+
+Ici nous verrons notamment :
+
+1.  **Comment résumer un jeu de données à un tableau de synthèse avec group_by et summarise,**
+
+2.  **Comment rechaper un tableau avec la fonction pivot,**
+
+3.  **Comment joindre deux tableaux avec la fonction join.**
+
+Dans ce module, vous apprendrez également à utiliser le **symbole d'affectation \<-** et à vous servir du panel "Environnement" de l'IDE RStudio
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+La librairie Tidyverse, déjà utilisée dans le module 3 pour manipuler les colonnes et les lignes d'un tableau, propose également des fonctions puissantes pour transformer directement un tableau de donnée en un autre tableau, évitant parfois de nombreuses étapes fastidieuses.
+
+```{r}
+library(tidyverse)
+```
+
+## 1 Résumer un tableau avec group_by et summarise
+
+Une constante en statistique est la présence de groupes ou de catégories qui séparent l'échantillon. On parle de ventilation. Les variables qui permettent de ventiler les éléments d'un échantillon s'appelle, dans le langage R, **un facteur**.
+
+Par exemple, le jeu de données diamonds utilisé dans le module 3 contient trois variables facteur :
+
+-   cut : la qualité de la découpe du diamant, de Fair à Ideal (5 niveaux)
+
+-   color : la couleur, de A à G (7 niveaux)
+
+-   clarity : la clarté", de I1 à IF (8 niveaux)
+
+Pour obtenir la liste des modalités de chaque facteurs, on utilise la fonction level()
+
+```{r}
+levels(diamonds$cut)
+```
+
+La fonction **group_by()** en association avec la fonction **summarise()** vous permet de réaliser à la volée des opérations sur chaque portion de tableau correspondant à un groupe.
+
+Par exemple, on peut calculer la **valeur moyenne du prix des diamants en fonction de leur clarté** en deux étapes :
+
+1.  On déclare le facteur utilisé pour faire les regroupement (ici clarity) dans la fonction group_by
+
+2.  On déclare la variable et la fonction de synthèse dans la fonction summarise : ici la variable price et la fonction de synthèse mean(price)
+
+```{r message = F}
+# Calcul du prix moyen des diamants en fonction de leur clarté
+
+diamonds %>% group_by(clarity) %>%
+  summarise(Moyenne = mean(price))    # on déclare ici la fonction de résumé souhaitée
+```
+
+On peut ajouter **autant de colonnes de résumé que souhaité** :
+
+```{r message = F}
+# Calcul du prix moyen, median et de l'écart-typedu prix des diamants en fonction de leur clarté
+
+diamonds %>% group_by(clarity) %>%
+  summarise(Moyenne = mean(price),
+            Mediane = median(price),
+            "Ecart-type" = sd(price))    # Ici, les guillements sont nécessaires à cause du "-"
+```
+
+On peut également combiner **plusieurs facteurs** de ventilation si l'on a trop chaud :
+
+```{r message = F}
+# Calcul du prix moyen, median et de l'écart-typedu prix des diamants en fonction de leur clarté et de leur découpe
+
+diamonds %>% group_by(clarity, cut) %>%   # pour une combinaison des facteurs
+  summarise(Moyenne = mean(price),
+            Mediane = median(price),
+            "Ecart-type" = sd(price)) 
+```
+
+Mais on peut aller **plus loin.** En effet, l**a fonction mutate() est sensible à la fonction group_by(). On peut donc alterner sur un même tableau des opérations sur l'ensemble des données ou par groupes.**
+
+Supposons que je souhaite centrer et réduire le prix de mes diamants pour chaque groupe de découpe. Je peux procéder de la manière suivante :
+
+1.  Calculer la moyenne et l'écart-type de chaque groupe et la reporter dans le tableau avec la fonction mutate()
+
+2.  Calculer la valeur centrée réduite par groupe de chaque diamants
+
+```{r}
+
+# Calcul du prix moyen, median et de l'écart-typedu prix des diamants en fonction de leur clarté et de leur découpe
+
+diamonds %>% group_by(cut) %>%   
+  mutate(Moyenne = mean(price),               # On utilise la fonction mutate plutôt que summarise
+         "Ecart-type" = sd(price)) %>%
+  ungroup() %>% 
+  mutate(prix_centre = price - Moyenne,
+         prix_centre_reduit = prix_centre / `Ecart-type`) %>% 
+  select(cut,price,Moyenne,`Ecart-type`, prix_centre,prix_centre_reduit) %>% 
+  arrange(cut)
+```
+
+**Pourquoi de tels écarts ? Comment y remédier ?**
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+### *Exercice d'application :*
+
+A partir du dataset diamonds :
+
+1.  Grâce à la fonction **mutate()**, calculez le prix de chaque diamant rapporté à son poids (carat)
+
+2.  Grâce à la fonction **summarise()**, construisez un tableau de synthèse fournissant le prix par carat moyen et son écart-type en fonction de leur découpe (facteur cut)
+
+3.  Grâce à la fonction **mutate()**, Calculez enfin le prix par carat centré-réduit de chaque diamant par groupe de découpe
+
+4.  Concluez
+
+```{r}
+# Ecrivez votre code ici :
+diamonds %>% select(carat, cut, price) %>% 
+  mutate(price_by_carat = price / carat) %>% 
+  group_by(cut) %>%   
+  mutate(Moyenne = mean(price_by_carat),   # On utilise la fonction mutate plutôt que summarise
+         "Ecart-type" = sd(price_by_carat)) %>% 
+  mutate(prix_centre = price_by_carat - Moyenne,
+         prix_centre_reduit = prix_centre / `Ecart-type`) %>% 
+  arrange(cut)
+
+
+```
