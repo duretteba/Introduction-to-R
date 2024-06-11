@@ -1,0 +1,107 @@
+---
+title: "Tests statistiques avec R"
+format: html
+editor: visual
+---
+
+### Déroulé de l'atelier
+
+------------------------------------------------------------------------
+
+### Introduction à R et aux tests statistiques
+
+#### Objectifs
+
+-   Comprendre l'environnement de R et RStudio
+-   Charger le jeu de données `PlantGrowth`
+-   Apprendre les bases des tests statistiques
+
+#### Consignes
+
+1.  **Installer les packages** (si ce n'est pas déjà fait) :
+    -   `tidyverse` pour les manipulations de données
+    -   `car` pour la fonction `leveneTest()`
+2.  **Charger le jeu de données** :
+    -   Utiliser la fonction `data()` pour charger le jeu de données `PlantGrowth`
+3.  **Introduction aux tests statistiques** :
+    -   Donner une brève explication des tests statistiques, de leur utilité et de leurs différents types (test de Student, ANOVA, etc.)
+
+``` r
+# Installer les packages si non installés
+if (!requireNamespace("tidyverse", quietly = TRUE)) {
+  install.packages("tidyverse")
+}
+if (!requireNamespace("car", quietly = TRUE)) {
+  install.packages("car")
+}
+
+# Charger les packages
+library(tidyverse)
+library(car)
+
+# Charger le jeu de données
+data(PlantGrowth)
+
+# Brève introduction aux tests statistiques
+# Expliquer les types de tests statistiques disponibles et leurs utilisations
+```
+
+------------------------------------------------------------------------
+
+### Étape 1 : Analyse exploratoire des données
+
+#### Objectifs
+
+-   Comprendre la structure des données
+-   Visualiser les distributions des données
+
+#### Consignes
+
+1.  **Afficher les premières lignes des données** :
+    -   Utiliser `head(PlantGrowth)` pour examiner les premières observations
+2.  **Visualiser les distributions des données** :
+    -   Utiliser des graphiques (histogrammes, boxplots) pour visualiser les distributions des données selon les différents groupes
+
+``` r
+# Afficher les premières lignes
+head(PlantGrowth)
+
+# Visualiser les distributions des données
+# Utiliser ggplot2 pour créer des graphiques
+```
+
+------------------------------------------------------------------------
+
+### Étape 2 : Analyse de variance (ANOVA)
+
+#### Objectifs
+
+-   Comparer les moyennes de plusieurs groupes
+
+#### Consignes
+
+1.  **Vérifier les conditions pour l'application de l'ANOVA** :
+    -   Tester la normalité des résidus avec le test de Shapiro-Wilk
+    -   Tester l'homoscédasticité des variances avec le test de Levene
+2.  **Effectuer une analyse de variance (ANOVA) si les conditions sont satisfaites** :
+    -   Utiliser la fonction `aov()` pour effectuer une ANOVA à un facteur
+
+``` r
+# Tester la normalité des résidus
+shapiro_test <- shapiro.test(resid(aov(weight ~ group, data = PlantGrowth)))
+
+# Tester l'homoscédasticité des variances
+levene_test <- leveneTest(weight ~ group, data = PlantGrowth)
+
+# Effectuer une ANOVA si les conditions sont satisfaites
+if (shapiro_test$p.value > 0.05 & levene_test$`Pr(>F)`[1] > 0.05) {
+  anova_result <- aov(weight ~ group, data = PlantGrowth)
+  print(summary(anova_result))
+} else {
+  print("Les conditions pour l'application de l'ANOVA ne sont pas remplies.")
+}
+```
+
+------------------------------------------------------------------------
+
+### 

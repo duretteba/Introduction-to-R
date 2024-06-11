@@ -19,11 +19,9 @@ Ici nous verrons notamment :
 
 1.  **Comment résumer un jeu de données à un tableau de synthèse avec group_by et summarise,**
 
-2.  **Comment rechaper un tableau avec la fonction pivot,**
+2.  **Comment rechaper un tableau avec la fonction pivot**
 
-3.  **Comment joindre deux tableaux avec la fonction join.**
-
-Dans ce module, vous apprendrez également à utiliser le **symbole d'affectation \<-** et à vous servir du panel "Environnement" de l'IDE RStudio
+Vous apprendrez également à utiliser le **symbôle d'assignation \<-** et à creer un jeu de données d'exemple.
 
 ------------------------------------------------------------------------
 
@@ -79,7 +77,7 @@ diamonds %>% group_by(clarity) %>%
             "Ecart-type" = sd(price))    # Ici, les guillements sont nécessaires à cause du "-"
 ```
 
-On peut également combiner **plusieurs facteurs** de ventilation si l'on a trop chaud :
+On peut également combiner **plusieurs facteurs** de ventilation :
 
 ```{r message = F}
 # Calcul du prix moyen, median et de l'écart-typedu prix des diamants en fonction de leur clarté et de leur découpe
@@ -90,7 +88,7 @@ diamonds %>% group_by(clarity, cut) %>%   # pour une combinaison des facteurs
             "Ecart-type" = sd(price)) 
 ```
 
-Mais on peut aller **plus loin.** En effet, l**a fonction mutate() est sensible à la fonction group_by(). On peut donc alterner sur un même tableau des opérations sur l'ensemble des données ou par groupes.**
+Mais on peut aller **plus loin.** En effet, l**a fonction mutate() est sensible à la fonction group_by(). On peut donc réaliser sur un même tableau des opérations sur l'ensemble des données ou par groupes.**
 
 Supposons que je souhaite centrer et réduire le prix de mes diamants pour chaque groupe de découpe. Je peux procéder de la manière suivante :
 
@@ -100,14 +98,14 @@ Supposons que je souhaite centrer et réduire le prix de mes diamants pour chaqu
 
 ```{r}
 
-# Calcul du prix moyen, median et de l'écart-typedu prix des diamants en fonction de leur clarté et de leur découpe
+# Calcul du prix moyen, median et de l'écart-type du prix des diamants en fonction de leur clarté et de leur découpe
 
 diamonds %>% group_by(cut) %>%   
   mutate(Moyenne = mean(price),               # On utilise la fonction mutate plutôt que summarise
          "Ecart-type" = sd(price)) %>%
   ungroup() %>% 
   mutate(prix_centre = price - Moyenne,
-         prix_centre_reduit = prix_centre / `Ecart-type`) %>% 
+         prix_centre_reduit = prix_centre / `Ecart-type`) %>%  # on rétuilise le résultat précédent
   select(cut,price,Moyenne,`Ecart-type`, prix_centre,prix_centre_reduit) %>% 
   arrange(cut)
 ```
@@ -142,4 +140,113 @@ diamonds %>% select(carat, cut, price) %>%
   arrange(cut)
 
 
+```
+
+------------------------------------------------------------------------
+
+## **2-Comment rechaper un tableau avec la fonction pivot**
+
+Le fichier de données classique contient un enregistrement par ligne et une variable par colonne. Ce format de tableau n'est pas toujours idéal pour l'analyse. Dans les tableaurs, on utilise souvent une fonction appelée tableau croisé dynamique qui permet de construire des tableaux de synthèse (pivot table en anglais). Cette fonctionnalité est assurée dans R par deux fonctions :
+
+-   pivot_wider : cette fonction permet de créer autant de colonnes qu'il y a de modalités d'un facteur. Mécaniquement, le nombre de colonnes augmente, le tableau devient plus large, d'où le nom de la fonction pivot\_**wider**
+
+-   pivot_longer : à l'inverse, on peut décider de concentrer plusieurs colonnes de sorte qu'une colonne précise le nom de la variable et la colonne associée sa modalité. Le nombre de colonnes diminue mais le nombre de lignes augmente. Le tableau s'allonge, d'où le nom de la fonction pivot**\_longer**
+
+Un exemple valant mieux qu'un long discours, voici un tableau au **format** **"long"**
+
+![Et voici le même tableau au **format "wide"** avec un **pivot sur la variable year**. La colonne unique "year" a été transformé en plusieurs colonnes portant le nom de l'année en question. La valeur des ventes (sales) a été utilisée telle que pour remplir le tableau.](images/clipboard-200595491.png)
+
+![](images/clipboard-3415304310.png)
+
+Voici comment procéder pour cela avec R. Créons d'abord l'exemple. Pour le conserver en mémoire pour la suite, nous allons l'assigner à une variable que nous appelerons "long". On utilise pour cela **le symbôle d'assignation \<-.** La fonction **tibble()** permet de créer un tableau dans R.
+
+```{r}
+# Creation et assignation d'un tableau de mémoire
+long <- tibble(
+  Product = c("A", "A", "B", "B"),
+  Year = c(2020, 2021, 2020, 2021),
+  Sales = c(100, 150, 200, 250)
+)
+
+```
+
+Cette fois, le tableau ne s'affiche pas directement dans le document car il est mis en mémoire mais vous pouvez le retrouver dans l'explorateur d'environnement en haut à droite de R Studio.
+
+![](images/clipboard-479202456.png)
+
+**Passage d'un tableau "long" à un tableau "wide"**
+
+```{r}
+# Passage d'un format de tableau long à un format de tableau wide
+
+wide <- long %>% pivot_wider(
+  names_from = "Year",         # On définit la variable d'où proviennent les futures étiquettes de colonne
+  values_from = "Sales"        # On définit la variable où l'on va trouver les valeurs pour remplir le tableau
+  ) 
+
+print(wide)
+
+```
+
+**Passage d'un tableau "wide" à un tableau "long"**
+
+```{r}
+# Passage d'un format de tableau wide à un format de tableau long
+
+wide %>% pivot_longer(
+  cols = -Product,
+  names_to = "Year",
+  values_to = "Sales"
+)
+
+```
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+### *Exercice d'application :*
+
+Le code ci-dessous créé le tableau de données "notes_long", executez le puis suivez les instruction.
+
+```{r}
+# Création du tableau d'exemple :
+notes_long <- tibble(
+  Etudiant = c("Jean", "Jean", "Jean", "Jean", 
+               "Jeanne", "Jeanne", "Jeanne", "Jeanne",
+               "Alice", "Alice", "Alice", "Alice"),
+  Matière = c("Maths", "Histoire", "Maths", "Histoire", 
+              "Maths", "Histoire", "Maths", "Histoire",
+              "Maths", "Histoire", "Maths", "Histoire"),
+  Semestre = c("Automne", "Automne", "Printemps", "Printemps",
+               "Automne", "Automne", "Printemps", "Printemps",
+               "Automne", "Automne", "Printemps", "Printemps"),
+  Note = c(85, 90, 88, 92, 95, 80, 93, 85, 78, 82, 80, 85)
+)
+notes_long
+```
+
+**1-**A l'aide de la fonction **pivot_wider**, transformez le tableau note_long en un tableau note_wide correspondant au tableau ci-dessous.
+
+![](images/clipboard-3440111423.png)
+
+```{r}
+# Ecrivez votre code ici:
+
+
+```
+
+2-A l'aide de la fonction **group_by** et **summarise**, affichez un tableau résumé des moyennes annuelles de chaque étudiant dans les deux matières identique à celui-ci.
+
+![](images/clipboard-2952717993.png)
+
+```{r}
+# Ecrivez votre code ici:
+
+```
+
+A l'aide de l'aide de la fonction pivot_wider, trouvez une manière de réaliser le tableau des moyennes sans utilise group_by ni summarise
+
+```{r}
+# Ecrivez votre code ici :
 ```

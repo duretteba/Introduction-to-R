@@ -1,0 +1,159 @@
+---
+title: "Atelier 1 - ACP"
+format: html
+editor: visual
+---
+
+### Déroulé de l'atelier
+
+------------------------------------------------------------------------
+
+#### Objectifs
+
+-   utiliser vos connaissances de R pour faire une Analyse en Composantes Principales
+-   Installer et charger les packages nécessaires : `tidyverse` et `FactoMineR`
+
+#### Consignes
+
+1.  **Installer les packages** (si ce n'est pas déjà fait) :
+    -   `install.packages("tidyverse")`
+    -   `install.packages("FactoMineR")`
+    -   `install.packages("factoextra")`
+2.  **Charger les packages** dans votre session R :
+    -   `library(tidyverse)`
+    -   `library(FactoMineR)`
+    -   `library(factoextra)`
+
+``` r
+{r}
+# Installer les packages
+install.packages("tidyverse")
+install.packages("FactoMineR")
+install.packages("factoextra")
+
+# Charger les packages
+library(tidyverse)
+library(FactoMineR)
+library(factoextra)
+```
+
+------------------------------------------------------------------------
+
+### Étape 1 : Chargement et exploration des données
+
+#### Objectifs
+
+-   Charger le jeu de données `mtcars`
+-   Explorer les données pour comprendre leur structure
+
+#### Consignes
+
+1.  **Charger le jeu de données `mtcars`** :
+    -   Utiliser la fonction `data(mtcars)`
+2.  **Afficher les premières lignes des données** :
+    -   Utiliser `head(mtcars)`
+3.  **Obtenir un résumé statistique des données** :
+    -   Utiliser `summary(mtcars)`
+
+``` r
+# Charger le jeu de données
+data(mtcars)
+
+# Afficher les premières lignes
+head(mtcars)
+
+# Obtenir un résumé statistique
+summary(mtcars)
+```
+
+------------------------------------------------------------------------
+
+### Étape 2 : Préparation des données
+
+#### Objectifs
+
+-   Sélectionner les variables numériques pour l'ACP
+
+#### Consignes
+
+1.  **Sélectionner les variables numériques** :
+    -   Utiliser la fonction `select_if()` de `dplyr` pour choisir uniquement les colonnes numériques : `mtcars %>% select_if(is.numeric)`
+2.  **Vérifier les données sélectionnées** :
+    -   Afficher les premières lignes avec `head()` pour vérifier
+
+``` r
+# Sélectionner les variables numériques
+mtcars_pca <- mtcars %>% select_if(is.numeric)
+
+# Vérifier les données
+head(mtcars_pca)
+```
+
+------------------------------------------------------------------------
+
+### Étape 3 : Réalisation de l'ACP
+
+#### Objectifs
+
+-   Effectuer l'ACP en utilisant `FactoMineR`
+
+#### Consignes
+
+1.  **Réaliser l'ACP** :
+    -   Utiliser la fonction `PCA()` du package `FactoMineR`
+    -   Passer les données préparées et définir `scale.unit = TRUE` et `graph = FALSE` pour ne pas générer de graphiques automatiquement
+
+``` r
+# Réaliser l'ACP
+pca_result <- PCA(mtcars_pca, scale.unit = TRUE, graph = FALSE)
+```
+
+------------------------------------------------------------------------
+
+### Étape 4 : Visualisation des résultats
+
+#### Objectifs
+
+-   Visualiser les résultats de l'ACP avec `factoextra`
+
+#### Consignes
+
+1.  **Visualiser la variance expliquée par les composantes principales** :
+    -   Utiliser `fviz_eig(pca_result)`
+2.  **Visualiser les individus (voitures)** :
+    -   Utiliser `fviz_pca_ind(pca_result, col.ind = "cos2", gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), repel = TRUE)`
+3.  **Visualiser les variables** :
+    -   Utiliser `fviz_pca_var(pca_result, col.var = "contrib", gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))`
+
+``` r
+# Visualiser la variance expliquée par les composantes principales
+fviz_eig(pca_result)
+
+# Visualiser les individus
+fviz_pca_ind(pca_result, 
+             col.ind = "cos2", # Colorer par la qualité de représentation
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE) # Éviter le chevauchement des étiquettes
+
+# Visualiser les variables
+fviz_pca_var(pca_result, 
+             col.var = "contrib", # Colorer par la contribution des variables
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
+```
+
+------------------------------------------------------------------------
+
+### Étape 5 : Interprétation des résultats
+
+#### Objectifs
+
+-   Interpréter les résultats de l'ACP à partir des visualisations
+
+#### Consignes
+
+1.  **Interpréter le graphique de la variance expliquée** :
+    -   Identifier les composantes principales importantes qui expliquent la majorité de la variance
+2.  **Analyser le graphique des individus** :
+    -   Observer comment les différentes voitures se regroupent selon les composantes principales
+3.  **Étudier le graphique des variables** :
+    -   Comprendre la contribution des différentes variables aux composantes principales

@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>Comment rechaper un tableau avec la fonction pivot,</strong></p></li>
 <li><p><strong>Comment joindre deux tableaux avec la fonction join.</strong></p></li>
 </ol>
-<p>Dans ce module, vous apprendrez également à utiliser le <strong>symbole d’affectation &lt;-</strong> et à vous servir du panel “Environnement” de l’IDE RStudio</p>
+<p>Vous apprendrez également à utiliser le <strong>symbôle d’assignation &lt;-</strong> et à creer un jeu de données d’exemple.</p>
 <hr>
 <hr>
 <p>La librairie Tidyverse, déjà utilisée dans le module 3 pour manipuler les colonnes et les lignes d’un tableau, propose également des fonctions puissantes pour transformer directement un tableau de donnée en un autre tableau, évitant parfois de nombreuses étapes fastidieuses.</p>
@@ -191,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 8 IF        2865.    1080        3920.</code></pre>
 </div>
 </div>
-<p>On peut également combiner <strong>plusieurs facteurs</strong> de ventilation si l’on a trop chaud :</p>
+<p>On peut également combiner <strong>plusieurs facteurs</strong> de ventilation :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcul du prix moyen, median et de l'écart-typedu prix des diamants en fonction de leur clarté et de leur découpe</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -217,21 +217,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 # ℹ 30 more rows</code></pre>
 </div>
 </div>
-<p>Mais on peut aller <strong>plus loin.</strong> En effet, l<strong>a fonction mutate() est sensible à la fonction group_by(). On peut donc alterner sur un même tableau des opérations sur l’ensemble des données ou par groupes.</strong></p>
+<p>Mais on peut aller <strong>plus loin.</strong> En effet, l<strong>a fonction mutate() est sensible à la fonction group_by(). On peut donc réaliser sur un même tableau des opérations sur l’ensemble des données ou par groupes.</strong></p>
 <p>Supposons que je souhaite centrer et réduire le prix de mes diamants pour chaque groupe de découpe. Je peux procéder de la manière suivante :</p>
 <ol type="1">
 <li><p>Calculer la moyenne et l’écart-type de chaque groupe et la reporter dans le tableau avec la fonction mutate()</p></li>
 <li><p>Calculer la valeur centrée réduite par groupe de chaque diamants</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcul du prix moyen, median et de l'écart-typedu prix des diamants en fonction de leur clarté et de leur découpe</span></span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcul du prix moyen, median et de l'écart-type du prix des diamants en fonction de leur clarté et de leur découpe</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span>   </span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Moyenne =</span> <span class="fu">mean</span>(price),               <span class="co"># On utilise la fonction mutate plutôt que summarise</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Ecart-type"</span> <span class="ot">=</span> <span class="fu">sd</span>(price)) <span class="sc">%&gt;%</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prix_centre =</span> price <span class="sc">-</span> Moyenne,</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">prix_centre_reduit =</span> prix_centre <span class="sc">/</span> <span class="st">`</span><span class="at">Ecart-type</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">prix_centre_reduit =</span> prix_centre <span class="sc">/</span> <span class="st">`</span><span class="at">Ecart-type</span><span class="st">`</span>) <span class="sc">%&gt;%</span>  <span class="co"># on rétuilise le résultat précédent</span></span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(cut,price,Moyenne,<span class="st">`</span><span class="at">Ecart-type</span><span class="st">`</span>, prix_centre,prix_centre_reduit) <span class="sc">%&gt;%</span> </span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(cut)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -292,6 +292,120 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 # ℹ 1 more variable: prix_centre_reduit &lt;dbl&gt;</code></pre>
 </div>
 </div>
+<hr>
+</section>
+</section>
+<section id="comment-rechaper-un-tableau-avec-la-fonction-pivot" class="level2">
+<h2 class="anchored" data-anchor-id="comment-rechaper-un-tableau-avec-la-fonction-pivot"><strong>2-Comment rechaper un tableau avec la fonction pivot</strong></h2>
+<p>Le fichier de données classique contient un enregistrement par ligne et une variable par colonne. Ce format de tableau n’est pas toujours idéal pour l’analyse. Dans les tableaurs, on utilise souvent une fonction appelée tableau croisé dynamique qui permet de construire des tableaux de synthèse (pivot table en anglais). Cette fonctionnalité est assurée dans R par deux fonctions :</p>
+<ul>
+<li><p>pivot_wider : cette fonction permet de créer autant de colonnes qu’il y a de modalités d’un facteur. Mécaniquement, le nombre de colonnes augmente, le tableau devient plus large, d’où le nom de la fonction pivot_<strong>wider</strong></p></li>
+<li><p>pivot_longer : à l’inverse, on peut décider de concentrer plusieurs colonnes de sorte qu’une colonne précise le nom de la variable et la colonne associée sa modalité. Le nombre de colonnes diminue mais le nombre de lignes augmente. Le tableau s’allonge, d’où le nom de la fonction pivot<strong>_longer</strong></p></li>
+</ul>
+<p>Un exemple valant mieux qu’un long discours, voici un tableau au <strong>format</strong> <strong>“long”</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-200595491.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Et voici le même tableau au <strong>format “wide”</strong> avec un <strong>pivot sur la variable year</strong>. La colonne unique “year” a été transformé en plusieurs colonnes portant le nom de l’année en question. La valeur des ventes (sales) a été utilisée telle que pour remplir le tableau.</figcaption>
+</figure>
+</div>
+<p><img src="images/clipboard-3415304310.png" class="img-fluid"></p>
+<p>Voici comment procéder pour cela avec R. Créons d’abord l’exemple. Pour le conserver en mémoire pour la suite, nous allons l’assigner à une variable que nous appelerons “long”. On utilise pour cela <strong>le symbôle d’assignation &lt;-.</strong> La fonction <strong>tibble()</strong> permet de créer un tableau dans R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creation et assignation d'un tableau de mémoire</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>long <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Product =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Year =</span> <span class="fu">c</span>(<span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2020</span>, <span class="dv">2021</span>),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sales =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">200</span>, <span class="dv">250</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Cette fois, le tableau ne s’affiche pas directement dans le document car il est mis en mémoire mais vous pouvez le retrouver dans l’explorateur d’environnement en haut à droite de R Studio.</p>
+<p><img src="images/clipboard-479202456.png" class="img-fluid"></p>
+<p><strong>Passage d’un tableau “long” à un tableau “wide”</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Passage d'un format de tableau long à un format de tableau wide</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>wide <span class="ot">&lt;-</span> long <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_from =</span> <span class="st">"Year"</span>,         <span class="co"># On définit la variable d'où proviennent les futures étiquettes de colonne</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_from =</span> <span class="st">"Sales"</span>        <span class="co"># On définit la variable où l'on va trouver les valeurs pour remplir le tableau</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  Product `2020` `2021`
+  &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+1 A          100    150
+2 B          200    250</code></pre>
+</div>
+</div>
+<p><strong>Passage d’un tableau “wide” à un tableau “long”</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Passage d'un format de tableau wide à un format de tableau long</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>wide <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="sc">-</span>Product,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">"Year"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_to =</span> <span class="st">"Sales"</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  Product Year  Sales
+  &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt;
+1 A       2020    100
+2 A       2021    150
+3 B       2020    200
+4 B       2021    250</code></pre>
+</div>
+</div>
+<hr>
+<hr>
+<section id="exercice-dapplication-1" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-dapplication-1"><em>Exercice d’application :</em></h3>
+<p>Le code ci-dessous créé le tableau de données “notes_long”, executez le puis suivez les instruction.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Création du tableau d'exemple :</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>notes_long <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Etudiant =</span> <span class="fu">c</span>(<span class="st">"Jean"</span>, <span class="st">"Jean"</span>, <span class="st">"Jean"</span>, <span class="st">"Jean"</span>, </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Jeanne"</span>, <span class="st">"Jeanne"</span>, <span class="st">"Jeanne"</span>, <span class="st">"Jeanne"</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Alice"</span>, <span class="st">"Alice"</span>, <span class="st">"Alice"</span>, <span class="st">"Alice"</span>),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  Matière <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Maths"</span>, <span class="st">"Histoire"</span>, <span class="st">"Maths"</span>, <span class="st">"Histoire"</span>, </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Maths"</span>, <span class="st">"Histoire"</span>, <span class="st">"Maths"</span>, <span class="st">"Histoire"</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Maths"</span>, <span class="st">"Histoire"</span>, <span class="st">"Maths"</span>, <span class="st">"Histoire"</span>),</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Semestre =</span> <span class="fu">c</span>(<span class="st">"Automne"</span>, <span class="st">"Automne"</span>, <span class="st">"Printemps"</span>, <span class="st">"Printemps"</span>,</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Automne"</span>, <span class="st">"Automne"</span>, <span class="st">"Printemps"</span>, <span class="st">"Printemps"</span>,</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Automne"</span>, <span class="st">"Automne"</span>, <span class="st">"Printemps"</span>, <span class="st">"Printemps"</span>),</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">Note =</span> <span class="fu">c</span>(<span class="dv">85</span>, <span class="dv">90</span>, <span class="dv">88</span>, <span class="dv">92</span>, <span class="dv">95</span>, <span class="dv">80</span>, <span class="dv">93</span>, <span class="dv">85</span>, <span class="dv">78</span>, <span class="dv">82</span>, <span class="dv">80</span>, <span class="dv">85</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>notes_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 4
+   Etudiant Matière  Semestre   Note
+   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;
+ 1 Jean     Maths    Automne      85
+ 2 Jean     Histoire Automne      90
+ 3 Jean     Maths    Printemps    88
+ 4 Jean     Histoire Printemps    92
+ 5 Jeanne   Maths    Automne      95
+ 6 Jeanne   Histoire Automne      80
+ 7 Jeanne   Maths    Printemps    93
+ 8 Jeanne   Histoire Printemps    85
+ 9 Alice    Maths    Automne      78
+10 Alice    Histoire Automne      82
+11 Alice    Maths    Printemps    80
+12 Alice    Histoire Printemps    85</code></pre>
+</div>
+</div>
+<p><strong>1-</strong>A l’aide de la fonction <strong>pivot_wider</strong>, transformez le tableau note_wide en un tableau note_long correspondant au tableau ci-dessous.</p>
+<p><img src="images/clipboard-3440111423.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>2-A l’aide de la fonction <strong>group_by</strong> et <strong>summarise</strong>, affichez un tableau résumé des moyennes annuelles de chaque étudiant dans les deux matières identique à celui-ci.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src=".png" class="img-fluid"></p>
 </section>
 </section>
 </section>

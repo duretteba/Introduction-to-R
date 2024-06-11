@@ -1,0 +1,135 @@
+---
+title: "Régression linéaire multiple avec R"
+format: html
+editor: visual
+---
+
+### Déroulé de l'atelier
+
+------------------------------------------------------------------------
+
+### Régression linéaire multiple avec R
+
+#### Objectifs
+
+-   Comprendre l'environnement de R et RStudio
+-   Installer et charger les packages nécessaires : `tidyverse`
+
+#### Consignes
+
+1.  **Installer les packages** (si ce n'est pas déjà fait) :
+    -   `install.packages("tidyverse")`
+2.  **Charger les packages** dans votre session R :
+    -   `library(tidyverse)`
+
+``` r
+# Installer les packages
+install.packages("tidyverse")
+
+# Charger les packages
+library(tidyverse)
+```
+
+------------------------------------------------------------------------
+
+### Étape 1 : Chargement et exploration des données
+
+#### Objectifs
+
+-   Charger le jeu de données `diamonds`
+-   Explorer les données pour comprendre leur structure
+
+#### Consignes
+
+1.  **Charger le jeu de données `diamonds`** :
+    -   Utiliser la fonction `diamonds` pour charger le jeu de données
+2.  **Afficher les premières lignes des données** :
+    -   Utiliser `head(diamonds)` pour examiner les premières observations
+3.  **Obtenir un résumé statistique des données** :
+    -   Utiliser `summary(diamonds)` pour obtenir des statistiques descriptives
+
+``` r
+# Charger le jeu de données
+data(diamonds)
+
+# Afficher les premières lignes
+head(diamonds)
+
+# Obtenir un résumé statistique
+summary(diamonds)
+```
+
+------------------------------------------------------------------------
+
+### Étape 2 : Préparation des données
+
+#### Objectifs
+
+-   Sélectionner les variables pour la régression linéaire
+
+#### Consignes
+
+1.  **Sélectionner les variables pour la régression linéaire** :
+    -   Examiner les variables disponibles dans le jeu de données et choisir les variables explicatives
+    -   construisez une variable volume déterminant le volume des diamants
+2.  **Créer un nouveau jeu de données avec les variables sélectionnées** :
+    -   Utiliser la fonction `select()` pour choisir les variables à inclure dans la régression linéaire
+
+``` r
+
+# Sélectionner les variables pour la régression linéaire
+diamonds_selected <- diamonds %>% 
+  select(carat, cut, color, clarity, depth, table, price)
+
+# Vérifier les données sélectionnées
+head(diamonds_selected)
+```
+
+------------------------------------------------------------------------
+
+### Étape 3 : Réalisation de la régression linéaire
+
+#### Objectifs
+
+-   Effectuer une régression linéaire pour expliquer le prix des diamants en fonction des autres variables
+
+#### Consignes
+
+1.  **Réaliser la régression linéaire** :
+    -   Utiliser la fonction `glm()` pour effectuer la régression linéaire
+
+``` r
+# Réaliser la régression linéaire
+model <- glm(price ~ ., data = diamonds_selected)
+```
+
+------------------------------------------------------------------------
+
+### Étape 4 : Analyse des résultats
+
+#### Objectifs
+
+-   Analyser les résultats de la régression linéaire
+
+#### Consignes
+
+1.  **Afficher un résumé du modèle** :
+    -   Utiliser la fonction `summary()` pour obtenir un résumé du modèle de régression
+2.  **Visualiser les résidus du modèle** :
+    -   Utiliser `ggplot2` pour créer un graphique des résidus du modèle
+
+``` r
+# Afficher un résumé du modèle
+summary(model)
+
+# Visualiser les résidus du modèle
+model$residuals %>% as_tibble() %>% 
+  ggplot(aes(value)) +
+  geom_histogram() +
+  labs(x = "Différence entre le prix prédit et le prix réel",
+       y = "Nombre de diamants")
+```
+
+------------------------------------------------------------------------
+
+### Comment pourriez-vous améliorer la qualité de la prédiction ?
