@@ -209,9 +209,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Voilà pour un premier aperçu des fonctions les plus classiques.</p>
 <hr>
-</section>
-<section id="exercice-dapplication" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-dapplication"><em>Exercice d’application</em></h2>
+<section id="exercice-dapplication" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-dapplication"><em>Exercice d’application</em></h3>
 <p>Calculez le logarithme en base 10 du sinus de 8 à la puissance 3</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre formule en dessous de cette ligne :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -220,9 +219,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 <hr>
 </section>
+</section>
 <section id="visualiser-un-tableau-de-données-avec-r" class="level2">
 <h2 class="anchored" data-anchor-id="visualiser-un-tableau-de-données-avec-r">2-Visualiser un tableau de données avec R</h2>
-<p>R dispose de quelques jeu de données préinstallées et prêtes à être utilisées :</p>
+<p>R dispose de jeux de données préinstallées et prêtes à être utilisées dont les plus utilisés sont :</p>
 <ol type="1">
 <li><p>mtcars : sur les voitures</p></li>
 <li><p>iris : sur les plantes</p></li>
@@ -230,30 +230,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>PlantGrowth : sur les plantes aussi</p></li>
 <li><p>USArrest : sur les crimes</p></li>
 </ol>
-<p>Pour en savoir plus sur ces jeux de données, vous pouvez utiliser la fonction <strong>help</strong> qui s’affiche dans un onglet séparé de Rstudio</p>
+<p>Pour en savoir plus sur ces jeux de données, vous pouvez utiliser la fonction <strong>help</strong> qui s’affiche dans un onglet séparé de Rstudio. La fonction <strong>data()</strong> vous donne accès à l’ensemble des jeux de données préinstallés.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="st">"ToothGrowth"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Pour accéder aux jeux de données il sufit de taper leur nom. Mais si vous faites ça (allez-y !), R affiche par défaut tout le jeu de données (les 150 lignes). Dur de s’y retrouver. Voici quelques fonctions utiles pour prendre connaissance d’un jeu de données.</p>
-<p>La fonction <strong>dim</strong> vous donne les dimensions du tableau. Ici 150 lignes et 5 colonnes</p>
+<p>Pour accéder aux jeux de données il sufit de taper leur nom. Mais si vous faites ça (allez-y !), R affiche par défaut tout le jeu de données (les 150 lignes). Dur de s’y retrouver. Voici quelques fonctions utiles pour prendre connaissance d’un jeu de données.La fonction <strong>dim</strong> vous donne les dimensions du tableau. Ici 150 lignes et 5 colonnes.</p>
+<pre><code></code></pre>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># La fonction dim</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># La fonction dim</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 150   5</code></pre>
 </div>
 </div>
 <p>La fonction <strong>names</strong> vous donne le nom des colonnes du tableau :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># La fonction names</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># La fonction names</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Sepal.Length" "Sepal.Width"  "Petal.Length" "Petal.Width"  "Species"     </code></pre>
 </div>
 </div>
 <p>Enfin la fonction <strong>head</strong> vous donne un “aperçu” des 10 premieres colonnes du tableau</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 1          5.1         3.5          1.4         0.2  setosa
@@ -265,9 +265,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <hr>
-</section>
-<section id="exercice-dapplication-1" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-dapplication-1"><em>Exercice d’application :</em></h2>
+<section id="exercice-dapplication-1" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-dapplication-1"><em>Exercice d’application :</em></h3>
 <p>Choisissez l’un des jeux de données de R puis :</p>
 <ul>
 <li><p>Interrogez l’aide pour avoir des informations générales sur le jeu de données</p></li>
@@ -275,10 +274,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Trouvez les noms des colonnes du jeu de données</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
 <hr>
+</section>
 </section>
 <section id="comment-réaliser-des-opérations-arithmétiques-élémentaires-sur-ce-tableau-de-données" class="level2">
 <h2 class="anchored" data-anchor-id="comment-réaliser-des-opérations-arithmétiques-élémentaires-sur-ce-tableau-de-données">3-Comment réaliser des opérations arithmétiques élémentaires sur ce tableau de données ?</h2>
@@ -293,10 +293,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p>Le symbole $ sert à sélectionner une colonne d’un tableau. Par exemple si je souhaite récupérer la colonne “Sepal.Length” du dataset “iris”, j’écrirai iris<strong>$</strong>Species.</p>
+<p>Le symbole $ sert à sélectionner une colonne d’un tableau. Par exemple si je souhaite récupérer la colonne “Sepal.Length” du dataset “iris”, j’écrirai iris<strong>$</strong>Sepal.Length.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Récupéraiton de la colonne Sepal.Length du dataset iris</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>Sepal.Length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Récupéraiton de la colonne Sepal.Length du dataset iris</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>Sepal.Length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4 5.1
  [19] 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5 4.9 5.0
@@ -310,19 +310,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <hr>
-</section>
-<section id="exercice-dapplication-2" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-dapplication-2"><em>Exercice d’application :</em></h2>
+<section id="exercice-dapplication-2" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-dapplication-2"><em>Exercice d’application :</em></h3>
 <p>Calculez la longueur de iris$Sepal.Length et affichez seulement les 5 premières valeurs</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Ecrivez votre réponse ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Ecrivez votre réponse ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
-<p>Il est ensuite possible de faire directement des opérations arityhmétiques sur ces vecteurs, comme par exemple :</p>
+<p>Il est ensuite possible de faire directement <strong>des opérations arithmétiques sur ces vecteurs</strong>, comme par exemple :</p>
 <p>La multiplication par un scalaire,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiplier par quatre la colonne Petal.Lenght du dataset iris</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="sc">*</span> iris<span class="sc">$</span>Petal.Length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiplier par quatre la colonne Petal.Lenght du dataset iris</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="sc">*</span> iris<span class="sc">$</span>Petal.Length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1]  5.6  5.6  5.2  6.0  5.6  6.8  5.6  6.0  5.6  6.0  6.0  6.4  5.6  4.4  4.8
  [16]  6.0  5.2  5.6  6.8  6.0  6.8  6.0  4.0  6.8  7.6  6.4  6.4  6.0  5.6  6.4
@@ -338,8 +337,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>le calcul du sinus :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prendre le sinus de la colonne Petal.Lenght du dataset iris</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sin</span>(iris<span class="sc">$</span>Petal.Length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prendre le sinus de la colonne Petal.Lenght du dataset iris</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sin</span>(iris<span class="sc">$</span>Petal.Length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1]  0.9854497  0.9854497  0.9635582  0.9974950  0.9854497  0.9916648
   [7]  0.9854497  0.9974950  0.9854497  0.9974950  0.9974950  0.9995736
@@ -370,8 +369,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Il est également possible de faire de opérations entre les colonnes du tableau, par exemple : <strong>sommer deux colonnes</strong>,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Somme de la colonne Petal.Length et Sepal.Length</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>Petal.Length <span class="sc">+</span> iris<span class="sc">$</span>Sepal.Length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Somme de la colonne Petal.Length et Sepal.Length</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>Petal.Length <span class="sc">+</span> iris<span class="sc">$</span>Sepal.Length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1]  6.5  6.3  6.0  6.1  6.4  7.1  6.0  6.5  5.8  6.4  6.9  6.4  6.2  5.4  7.0
  [16]  7.2  6.7  6.5  7.4  6.6  7.1  6.6  5.6  6.8  6.7  6.6  6.6  6.7  6.6  6.3
@@ -387,8 +386,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>calculer <strong>le produit scalaire</strong> de deux colonnes :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Produit scalaire de la colonne Petal.Length et Sepal.Length</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>Petal.Length <span class="sc">*</span> iris<span class="sc">$</span>Sepal.Length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Produit de la colonne Petal.Length et Sepal.Length</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>Petal.Length <span class="sc">*</span> iris<span class="sc">$</span>Sepal.Length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1]  7.14  6.86  6.11  6.90  7.00  9.18  6.44  7.50  6.16  7.35  8.10  7.68
  [13]  6.72  4.73  6.96  8.55  7.02  7.14  9.69  7.65  9.18  7.65  4.60  8.67
@@ -407,12 +406,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <hr>
 </section>
-<section id="exercice-dapplication-3" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-dapplication-3"><em>Exercice d’application :</em></h2>
+<section id="exercice-dapplication-3" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-dapplication-3"><em>Exercice d’application :</em></h3>
 <p>Calculez le sinus de la somme des colonnes Petal.Length et Sepal.Length du dataset iris</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Ecrivez votre réponse ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Ecrivez votre réponse ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 </section>
 </section>
 

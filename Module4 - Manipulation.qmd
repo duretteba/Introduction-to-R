@@ -35,7 +35,7 @@ library(tidyverse)
 
 ## 1 Résumer un tableau avec group_by et summarise
 
-Une constante en statistique est la présence de groupes ou de catégories qui séparent l'échantillon. On parle de ventilation. Les variables qui permettent de ventiler les éléments d'un échantillon s'appelle, dans le langage R, **un facteur**.
+Une constante en statistique est la présence de groupes ou de catégories qui **séparent l'échantillon.** On parle de **ventilation**. Les variables qui permettent de ventiler les éléments d'un échantillon s'appelle, dans le langage R, **un facteur**.
 
 Par exemple, le jeu de données diamonds utilisé dans le module 3 contient trois variables facteur :
 
@@ -43,7 +43,7 @@ Par exemple, le jeu de données diamonds utilisé dans le module 3 contient troi
 
 -   color : la couleur, de A à G (7 niveaux)
 
--   clarity : la clarté", de I1 à IF (8 niveaux)
+-   clarity : la clarté, de I1 à IF (8 niveaux)
 
 Pour obtenir la liste des modalités de chaque facteurs, on utilise la fonction level()
 
@@ -55,9 +55,9 @@ La fonction **group_by()** en association avec la fonction **summarise()** vous 
 
 Par exemple, on peut calculer la **valeur moyenne du prix des diamants en fonction de leur clarté** en deux étapes :
 
-1.  On déclare le facteur utilisé pour faire les regroupement (ici clarity) dans la fonction group_by
+1.  **On déclare le facteur utilisé** pour faire les regroupement (ici clarity) dans la fonction **group_by**
 
-2.  On déclare la variable et la fonction de synthèse dans la fonction summarise : ici la variable price et la fonction de synthèse mean(price)
+2.  On **déclare la variable et la fonction de synthèse** dans la fonction summarise : ici la variable price et la fonction de synthèse mean(price)
 
 ```{r message = F}
 # Calcul du prix moyen des diamants en fonction de leur clarté
@@ -102,7 +102,7 @@ Supposons que je souhaite centrer et réduire le prix de mes diamants pour chaqu
 
 diamonds %>% group_by(cut) %>%   
   mutate(Moyenne = mean(price),               # On utilise la fonction mutate plutôt que summarise
-         "Ecart-type" = sd(price)) %>%
+         "Ecart-type" = sd(price)) %>%  
   ungroup() %>% 
   mutate(prix_centre = price - Moyenne,
          prix_centre_reduit = prix_centre / `Ecart-type`) %>%  # on rétuilise le résultat précédent
@@ -130,14 +130,7 @@ A partir du dataset diamonds :
 
 ```{r}
 # Ecrivez votre code ici :
-diamonds %>% select(carat, cut, price) %>% 
-  mutate(price_by_carat = price / carat) %>% 
-  group_by(cut) %>%   
-  mutate(Moyenne = mean(price_by_carat),   # On utilise la fonction mutate plutôt que summarise
-         "Ecart-type" = sd(price_by_carat)) %>% 
-  mutate(prix_centre = price_by_carat - Moyenne,
-         prix_centre_reduit = prix_centre / `Ecart-type`) %>% 
-  arrange(cut)
+
 
 
 ```
@@ -168,6 +161,7 @@ long <- tibble(
   Sales = c(100, 150, 200, 250)
 )
 
+long
 ```
 
 Cette fois, le tableau ne s'affiche pas directement dans le document car il est mis en mémoire mais vous pouvez le retrouver dans l'explorateur d'environnement en haut à droite de R Studio.

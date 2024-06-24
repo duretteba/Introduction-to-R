@@ -1,6 +1,6 @@
 ---
 title: "Premiers pas avec R"
-format: html
+format: pdf
 editor: visual
 copyright: "Barthélémy DURETTE 2024 tous droits réservés"
 ---
@@ -121,8 +121,6 @@ Calculez le logarithme en base 10 du sinus de 8 à la puissance 3
 
 
 
-
-
 ```
 
 Vous trouvez : **-1.099532 ? Bravo ! Sinon, cherchez l'erreur...**
@@ -151,9 +149,10 @@ Pour en savoir plus sur ces jeux de données, vous pouvez utiliser la fonction *
 help("ToothGrowth")
 ```
 
-Pour accéder aux jeux de données il sufit de taper leur nom. Mais si vous faites ça (allez-y !), R affiche par défaut tout le jeu de données (les 150 lignes). Dur de s'y retrouver. Voici quelques fonctions utiles pour prendre connaissance d'un jeu de données.
+Pour accéder aux jeux de données il sufit de taper leur nom. Mais si vous faites ça (allez-y !), R affiche par défaut tout le jeu de données (les 150 lignes). Dur de s'y retrouver. Voici quelques fonctions utiles pour prendre connaissance d'un jeu de données.La fonction **dim** vous donne les dimensions du tableau. Ici 150 lignes et 5 colonnes.
 
-La fonction **dim** vous donne les dimensions du tableau. Ici 150 lignes et 5 colonnes
+```         
+```
 
 ```{r}
 # La fonction dim
@@ -190,11 +189,6 @@ Choisissez l'un des jeux de données de R puis :
 # Ecrivez votre code ici :
 
 
-
-
-
-
-
 ```
 
 ------------------------------------------------------------------------
@@ -209,7 +203,7 @@ Entrons maintenant dans le vif du sujet. Comment utiliser R pour manipuler et fa
 |---------------------------------------------------------------------------------------------------------------------------|
 | **Le premier des quatre symboles indispensables à connaitre pour utiliser R est le symbole "\$" (money, money, money !)** |
 
-Le symbole \$ sert à sélectionner une colonne d'un tableau. Par exemple si je souhaite récupérer la colonne "Sepal.Length" du dataset "iris", j'écrirai iris**\$**Species.
+Le symbole \$ sert à sélectionner une colonne d'un tableau. Par exemple si je souhaite récupérer la colonne "Sepal.Length" du dataset "iris", j'écrirai iris**\$**Sepal.Length.
 
 ```{r}
 # Récupéraiton de la colonne Sepal.Length du dataset iris
@@ -230,7 +224,7 @@ Calculez la longueur de iris\$Sepal.Length et affichez seulement les 5 première
 
 ------------------------------------------------------------------------
 
-Il est ensuite possible de faire directement des opérations arithmétiques sur ces vecteurs, comme par exemple :
+Il est ensuite possible de faire directement **des opérations arithmétiques sur ces vecteurs**, comme par exemple :
 
 La multiplication par un scalaire,
 
@@ -256,7 +250,7 @@ iris$Petal.Length + iris$Sepal.Length
 calculer **le produit scalaire** de deux colonnes :
 
 ```{r}
-# Produit scalaire de la colonne Petal.Length et Sepal.Length
+# Produit de la colonne Petal.Length et Sepal.Length
 iris$Petal.Length * iris$Sepal.Length
 ```
 
@@ -268,6 +262,5 @@ Calculez le sinus de la somme des colonnes Petal.Length et Sepal.Length du datas
 
 ```{r}
 #Ecrivez votre réponse ici :
-
 
 ```

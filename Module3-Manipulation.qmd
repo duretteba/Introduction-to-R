@@ -21,7 +21,7 @@ Nous y verrons :
 
 3.  **Comment ajouter de nouvelles variables à un tableau de données**
 
-Dans ce module, vous apprendrez également à utiliser le **package tidyverse et le symbôle "pipe"** : **%\>%**
+Dans ce module, vous apprendrez également à utiliser le **package Tidyverse et le symbôle "pipe"** : **%\>%**
 
 ------------------------------------------------------------------------
 
@@ -64,14 +64,14 @@ On peut d'ailleurs dénombrer les diamants en fonction de ce facteur avec la fon
 table(diamonds$cut)
 ```
 
-Pour filtrer un jeu de données, on utilisera la fonction **filter()**. En paramètre de cette fonction, on fournira la condition logique que l'on souhaite, par exemple :
+Pour filtrer un jeu de données, on utilisera la fonction **filter()**. En paramètre de cette fonction, on fournira la condition logique que l'on souhaite appliquer, par exemple :
 
 -   **cut == "Fair"** pour conserver uniquement les diamants de qualité de coupe "Fair"
 
 ```{r}
 # Restriction du tableau aux diamants dont la coupe est "Fair"
 
-diamonds %>% filter(cut == "Fair")
+diamonds %>% filter(cut == "Fair", color == "E")
 ```
 
 -   **cut != "Fair"** pour conserver uniquement les diamants dont la qualité de coupe n'est pas Fair.
@@ -86,8 +86,8 @@ diamonds %>% filter(cut != "Fair")
 
 ```{r}
 # Restriction du tableau aux diamants dont la coupe est "Fair" ou "Good"
-
-diamonds %>% filter(cut %in% c("Fair","Good"))
+choix <- c("Fair","Good","Ideal")
+diamonds %>% filter(cut %in% choix)
 ```
 
 **Au passage, vous venez de faire connaissance :**
@@ -105,15 +105,15 @@ diamonds %>% filter(cut %in% c("Fair","Good"))
 ```         
 Dans vos propres termes, décrivez ici en quelques lignes à quoi correspondent ces trois nouveaux éléments de code R :
 
-Le symbôle %>% ...
+Le symbôle %>% sert à brancher la sortie d'une fonction vers l'entrée d'une autre fonction
 
 
 
-Le symbôle %in% ...
+Le symbôle %in% est un connecteur logique qui représente l'appartenance à un ensemble d'elements
 
 
 
-La fonction c() ...
+La fonction c() construit un vecteur à partir des elements en parametre
 ```
 
 ------------------------------------------------------------------------
@@ -128,7 +128,7 @@ Filtrez le tableau de données diamonds pour ne conserver que les diamants d'une
 
 ```{r}
 # Ecrivez votre code ici :
-
+diamonds %>% filter(price > 15000)
   
 ```
 
@@ -196,6 +196,8 @@ A partir du dataset diamonds, créez un tableau contenant uniquement les dimensi
 ```{r}
 # Ecrivez votre code ici :
 
+ 
+  
   
 ```
 
@@ -224,7 +226,8 @@ On peut ensuite utiliser cette nouvelle colonne dans la suite des opérations, p
 ```{r}
 # Scatter plot du poids des diamants en fonction de leur volume
 
-diamonds %>% mutate(volume = x * y * z) %>% 
+diamonds %>% 
+  mutate(volume = x * y * z) %>% 
   ggplot() +                                  # Attention à ne pas confondre le + de ggplot et %>%
   geom_point(aes(x=volume, y = carat))
 ```
@@ -241,7 +244,7 @@ A partir du dataset diamonds :
 
 1.  calculez le volume estimatif des diamants à part de leurs dimensions x, y et z
 
-2.  filtrez les diamants ayant un volume inférieur à 10 mm3 ou supérieur à 1000 mm3
+2.  filtrez (supprimez) les diamants ayant un volume inférieur à 10 mm3 ou supérieur à 1000 mm3
 
 3.  visualiser le prix des diamants (price) en fonction de leur volume
 

@@ -104,8 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Ici nous verrons notamment :</p>
 <ol type="1">
 <li><p><strong>Comment résumer un jeu de données à un tableau de synthèse avec group_by et summarise,</strong></p></li>
-<li><p><strong>Comment rechaper un tableau avec la fonction pivot,</strong></p></li>
-<li><p><strong>Comment joindre deux tableaux avec la fonction join.</strong></p></li>
+<li><p><strong>Comment rechaper un tableau avec la fonction pivot</strong></p></li>
 </ol>
 <p>Vous apprendrez également à utiliser le <strong>symbôle d’assignation &lt;-</strong> et à creer un jeu de données d’exemple.</p>
 <hr>
@@ -130,12 +129,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="résumer-un-tableau-avec-group_by-et-summarise" class="level2">
 <h2 class="anchored" data-anchor-id="résumer-un-tableau-avec-group_by-et-summarise">1 Résumer un tableau avec group_by et summarise</h2>
-<p>Une constante en statistique est la présence de groupes ou de catégories qui séparent l’échantillon. On parle de ventilation. Les variables qui permettent de ventiler les éléments d’un échantillon s’appelle, dans le langage R, <strong>un facteur</strong>.</p>
+<p>Une constante en statistique est la présence de groupes ou de catégories qui <strong>séparent l’échantillon.</strong> On parle de <strong>ventilation</strong>. Les variables qui permettent de ventiler les éléments d’un échantillon s’appelle, dans le langage R, <strong>un facteur</strong>.</p>
 <p>Par exemple, le jeu de données diamonds utilisé dans le module 3 contient trois variables facteur :</p>
 <ul>
 <li><p>cut : la qualité de la découpe du diamant, de Fair à Ideal (5 niveaux)</p></li>
 <li><p>color : la couleur, de A à G (7 niveaux)</p></li>
-<li><p>clarity : la clarté”, de I1 à IF (8 niveaux)</p></li>
+<li><p>clarity : la clarté, de I1 à IF (8 niveaux)</p></li>
 </ul>
 <p>Pour obtenir la liste des modalités de chaque facteurs, on utilise la fonction level()</p>
 <div class="cell">
@@ -147,8 +146,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>La fonction <strong>group_by()</strong> en association avec la fonction <strong>summarise()</strong> vous permet de réaliser à la volée des opérations sur chaque portion de tableau correspondant à un groupe.</p>
 <p>Par exemple, on peut calculer la <strong>valeur moyenne du prix des diamants en fonction de leur clarté</strong> en deux étapes :</p>
 <ol type="1">
-<li><p>On déclare le facteur utilisé pour faire les regroupement (ici clarity) dans la fonction group_by</p></li>
-<li><p>On déclare la variable et la fonction de synthèse dans la fonction summarise : ici la variable price et la fonction de synthèse mean(price)</p></li>
+<li><p><strong>On déclare le facteur utilisé</strong> pour faire les regroupement (ici clarity) dans la fonction <strong>group_by</strong></p></li>
+<li><p>On <strong>déclare la variable et la fonction de synthèse</strong> dans la fonction summarise : ici la variable price et la fonction de synthèse mean(price)</p></li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcul du prix moyen des diamants en fonction de leur clarté</span></span>
@@ -228,7 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span>   </span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Moyenne =</span> <span class="fu">mean</span>(price),               <span class="co"># On utilise la fonction mutate plutôt que summarise</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Ecart-type"</span> <span class="ot">=</span> <span class="fu">sd</span>(price)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Ecart-type"</span> <span class="ot">=</span> <span class="fu">sd</span>(price)) <span class="sc">%&gt;%</span>  </span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prix_centre =</span> price <span class="sc">-</span> Moyenne,</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">prix_centre_reduit =</span> prix_centre <span class="sc">/</span> <span class="st">`</span><span class="at">Ecart-type</span><span class="st">`</span>) <span class="sc">%&gt;%</span>  <span class="co"># on rétuilise le résultat précédent</span></span>
@@ -264,33 +263,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Concluez</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici :</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">select</span>(carat, cut, price) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">price_by_carat =</span> price <span class="sc">/</span> carat) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut) <span class="sc">%&gt;%</span>   </span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Moyenne =</span> <span class="fu">mean</span>(price_by_carat),   <span class="co"># On utilise la fonction mutate plutôt que summarise</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Ecart-type"</span> <span class="ot">=</span> <span class="fu">sd</span>(price_by_carat)) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prix_centre =</span> price_by_carat <span class="sc">-</span> Moyenne,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">prix_centre_reduit =</span> prix_centre <span class="sc">/</span> <span class="st">`</span><span class="at">Ecart-type</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(cut)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 53,940 × 8
-# Groups:   cut [5]
-   carat cut   price price_by_carat Moyenne `Ecart-type` prix_centre
-   &lt;dbl&gt; &lt;ord&gt; &lt;int&gt;          &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
- 1  0.22 Fair    337          1532.   3767.        1540.      -2235.
- 2  0.86 Fair   2757          3206.   3767.        1540.       -561.
- 3  0.96 Fair   2759          2874.   3767.        1540.       -893.
- 4  0.7  Fair   2762          3946.   3767.        1540.        178.
- 5  0.7  Fair   2762          3946.   3767.        1540.        178.
- 6  0.91 Fair   2763          3036.   3767.        1540.       -731.
- 7  0.91 Fair   2763          3036.   3767.        1540.       -731.
- 8  0.98 Fair   2777          2834.   3767.        1540.       -934.
- 9  0.84 Fair   2782          3312.   3767.        1540.       -455.
-10  1.01 Fair   2788          2760.   3767.        1540.      -1007.
-# ℹ 53,930 more rows
-# ℹ 1 more variable: prix_centre_reduit &lt;dbl&gt;</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
 </section>
@@ -312,12 +285,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="images/clipboard-3415304310.png" class="img-fluid"></p>
 <p>Voici comment procéder pour cela avec R. Créons d’abord l’exemple. Pour le conserver en mémoire pour la suite, nous allons l’assigner à une variable que nous appelerons “long”. On utilise pour cela <strong>le symbôle d’assignation &lt;-.</strong> La fonction <strong>tibble()</strong> permet de créer un tableau dans R.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creation et assignation d'un tableau de mémoire</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>long <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Product =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>),</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Year =</span> <span class="fu">c</span>(<span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2020</span>, <span class="dv">2021</span>),</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sales =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">200</span>, <span class="dv">250</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creation et assignation d'un tableau de mémoire</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>long <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Product =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Year =</span> <span class="fu">c</span>(<span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2020</span>, <span class="dv">2021</span>),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sales =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">200</span>, <span class="dv">250</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  Product  Year Sales
+  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1 A        2020   100
+2 A        2021   150
+3 B        2020   200
+4 B        2021   250</code></pre>
+</div>
 </div>
 <p>Cette fois, le tableau ne s’affiche pas directement dans le document car il est mis en mémoire mais vous pouvez le retrouver dans l’explorateur d’environnement en haut à droite de R Studio.</p>
 <p><img src="images/clipboard-479202456.png" class="img-fluid"></p>
@@ -330,7 +314,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_from =</span> <span class="st">"Sales"</span>        <span class="co"># On définit la variable où l'on va trouver les valeurs pour remplir le tableau</span></span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  ) </span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(wide)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   Product `2020` `2021`
@@ -396,16 +380,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 12 Alice    Histoire Printemps    85</code></pre>
 </div>
 </div>
-<p><strong>1-</strong>A l’aide de la fonction <strong>pivot_wider</strong>, transformez le tableau note_wide en un tableau note_long correspondant au tableau ci-dessous.</p>
+<p><strong>1-</strong>A l’aide de la fonction <strong>pivot_wider</strong>, transformez le tableau note_long en un tableau note_wide correspondant au tableau ci-dessous.</p>
 <p><img src="images/clipboard-3440111423.png" class="img-fluid"></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>2-A l’aide de la fonction <strong>group_by</strong> et <strong>summarise</strong>, affichez un tableau résumé des moyennes annuelles de chaque étudiant dans les deux matières identique à celui-ci.</p>
+<p><img src="images/clipboard-2952717993.png" class="img-fluid"></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src=".png" class="img-fluid"></p>
+<p>A l’aide de l’aide de la fonction pivot_wider, trouvez une manière de réaliser le tableau des moyennes sans utilise group_by ni summarise</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 </section>
 </section>

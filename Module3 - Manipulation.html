@@ -102,17 +102,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="bienvenue-dans-ce-troisième-module-de-la-formation-introduction-au-logiciel-r.">Bienvenue dans ce troisième module de la formation “Introduction au logiciel R”.</h3>
 <p>Nous y verrons :</p>
 <ol type="1">
-<li><p><strong>Comment selectionner lignes et colonnes d’un tableau de données</strong></p></li>
-<li><p><strong>Comment rechaper un tableau au format souhaité avec la fonction pivot</strong></p></li>
-<li><p><strong>Comment résumer un tableau avec la fonction group_by</strong></p></li>
+<li><p><strong>Comment selectionner lignes d’un tableau de données</strong></p></li>
+<li><p><strong>Comment selectionner les colonnes d’un tableau de données</strong></p></li>
+<li><p><strong>Comment ajouter de nouvelles variables à un tableau de données</strong></p></li>
 </ol>
-<p>Dans ce module, vous apprendrez également à utiliser le <strong>package tidyverse et le symbôle “pipe”</strong> : <strong>%&gt;%</strong></p>
+<p>Dans ce module, vous apprendrez également à utiliser le <strong>package Tidyverse et le symbôle “pipe”</strong> : <strong>%&gt;%</strong></p>
 <hr>
 <hr>
 </section>
 <section id="préambule-le-package-tidyverse" class="level2">
 <h2 class="anchored" data-anchor-id="préambule-le-package-tidyverse">Préambule : le package tidyverse</h2>
 <p>La librairie Tidyverse a marqué un tournant dans l’histoire du logiciel R. Ce package qui regroupe en réalité un ensemble de librairies fonctionnant de concert a changer la manière de programmer dans R. On est passé d’une programmation dite fonctionnelle à une programmation en tunnel (pipe). Il a également permis de définir un jeu de fonctions très utiles pour la manipulation des données. Nous commencerons donc par son installation. Cela peut prendre un certain temps.</p>
+<p>Par ailleurs, le package ggplot2 est nécessaire</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -135,64 +136,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="sélectionner-les-lignes-et-colonnes-dun-tableau" class="level2">
-<h2 class="anchored" data-anchor-id="sélectionner-les-lignes-et-colonnes-dun-tableau">1-Sélectionner les lignes et colonnes d’un tableau</h2>
 <p>Pour nous former à la manipulation de données, nous allons prendre comme un exemple un tableau de plus de 50 000 lignes qu’il serait difficile de manipuler dans un tableur classique.</p>
 <p>Il s’agit du jeu de données “diamonds” dont les caractéristiques sont les suivantes :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="st">"diamonds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="st">"diamonds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="sélectionner-les-lignes-dun-tableau" class="level3">
-<h3 class="anchored" data-anchor-id="sélectionner-les-lignes-dun-tableau">1.1 Sélectionner les lignes d’un tableau</h3>
+</section>
+<section id="sélectionner-les-lignes-dun-tableau" class="level2">
+<h2 class="anchored" data-anchor-id="sélectionner-les-lignes-dun-tableau">1 Sélectionner les lignes d’un tableau</h2>
 <p>On appelle aussi cela un “<strong>filtre</strong>” car il s’agit de conserver uniquement les lignes vérifiant une condition logique. Prenons par exemple la qualité de la coupe du diamant : la variable cut.</p>
 <p>La variable <strong>cut</strong> est un <strong>facteur</strong> ventilant les diamants selon 5 modalités :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(diamonds<span class="sc">$</span>cut)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(diamonds<span class="sc">$</span>cut)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Fair"      "Good"      "Very Good" "Premium"   "Ideal"    </code></pre>
 </div>
 </div>
 <p>On peut d’ailleurs dénombrer les diamants en fonction de ce facteur avec la fonction <strong>table()</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(diamonds<span class="sc">$</span>cut)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(diamonds<span class="sc">$</span>cut)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      Fair      Good Very Good   Premium     Ideal 
      1610      4906     12082     13791     21551 </code></pre>
 </div>
 </div>
-<p>Pour filtrer un jeu de données, on utilisera la fonction <strong>filter()</strong>. En paramètre de cette fonction, on fournira la condition logique que l’on souhaite, par exemple :</p>
+<p>Pour filtrer un jeu de données, on utilisera la fonction <strong>filter()</strong>. En paramètre de cette fonction, on fournira la condition logique que l’on souhaite appliquer, par exemple :</p>
 <ul>
 <li><strong>cut == “Fair”</strong> pour conserver uniquement les diamants de qualité de coupe “Fair”</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Restriction du tableau aux diamants dont la coupe est "Fair"</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">"Fair"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Restriction du tableau aux diamants dont la coupe est "Fair"</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">"Fair"</span>, color <span class="sc">==</span> <span class="st">"E"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1,610 × 10
+<pre><code># A tibble: 224 × 10
    carat cut   color clarity depth table price     x     y     z
    &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
  1  0.22 Fair  E     VS2      65.1    61   337  3.87  3.78  2.49
  2  0.86 Fair  E     SI2      55.1    69  2757  6.45  6.33  3.52
- 3  0.96 Fair  F     SI2      66.3    62  2759  6.27  5.95  4.07
- 4  0.7  Fair  F     VS2      64.5    57  2762  5.57  5.53  3.58
- 5  0.7  Fair  F     VS2      65.3    55  2762  5.63  5.58  3.66
- 6  0.91 Fair  H     SI2      64.4    57  2763  6.11  6.09  3.93
- 7  0.91 Fair  H     SI2      65.7    60  2763  6.03  5.99  3.95
- 8  0.98 Fair  H     SI2      67.9    60  2777  6.05  5.97  4.08
- 9  0.84 Fair  G     SI1      55.1    67  2782  6.39  6.2   3.47
-10  1.01 Fair  E     I1       64.5    58  2788  6.29  6.21  4.03
-# ℹ 1,600 more rows</code></pre>
+ 3  1.01 Fair  E     I1       64.5    58  2788  6.29  6.21  4.03
+ 4  1.01 Fair  E     SI2      67.4    60  2797  6.19  6.05  4.13
+ 5  0.57 Fair  E     VVS1     58.7    66  2805  5.34  5.43  3.16
+ 6  0.96 Fair  E     SI2      53.1    63  2815  6.73  6.65  3.55
+ 7  0.98 Fair  E     SI2      53.3    67  2855  6.82  6.74  3.61
+ 8  1.01 Fair  E     SI2      67.6    57  2862  6.21  6.11  4.18
+ 9  0.8  Fair  E     SI1      56.3    63  2885  6.22  6.14  3.48
+10  0.71 Fair  E     VS2      64.6    59  2902  5.62  5.59  3.62
+# ℹ 214 more rows</code></pre>
 </div>
 </div>
 <ul>
 <li><strong>cut != “Fair”</strong> pour conserver uniquement les diamants dont la qualité de coupe n’est pas Fair.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Restriction du tableau aux diamants dont la coupe n'est pas "Fair"</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cut <span class="sc">!=</span> <span class="st">"Fair"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Restriction du tableau aux diamants dont la coupe n'est pas "Fair"</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cut <span class="sc">!=</span> <span class="st">"Fair"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 52,330 × 10
    carat cut       color clarity depth table price     x     y     z
@@ -214,23 +216,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>cut %in% c(“Fair”,“Good”)</strong> pour avoir tous les diamants de la classe Fair ou Good</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Restriction du tableau aux diamants dont la coupe est "Fair" ou "Good"</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cut <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Fair"</span>,<span class="st">"Good"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Restriction du tableau aux diamants dont la coupe est "Fair" ou "Good"</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>choix <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Fair"</span>,<span class="st">"Good"</span>,<span class="st">"Ideal"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cut <span class="sc">%in%</span> choix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6,516 × 10
+<pre><code># A tibble: 28,067 × 10
    carat cut   color clarity depth table price     x     y     z
    &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1  0.23 Good  E     VS1      56.9    65   327  4.05  4.07  2.31
- 2  0.31 Good  J     SI2      63.3    58   335  4.34  4.35  2.75
- 3  0.22 Fair  E     VS2      65.1    61   337  3.87  3.78  2.49
- 4  0.3  Good  J     SI1      64      55   339  4.25  4.28  2.73
- 5  0.3  Good  J     SI1      63.4    54   351  4.23  4.29  2.7 
- 6  0.3  Good  J     SI1      63.8    56   351  4.23  4.26  2.71
- 7  0.3  Good  I     SI2      63.3    56   351  4.26  4.3   2.71
- 8  0.23 Good  F     VS1      58.2    59   402  4.06  4.08  2.37
- 9  0.23 Good  E     VS1      64.1    59   402  3.83  3.85  2.46
-10  0.31 Good  H     SI1      64      54   402  4.29  4.31  2.75
-# ℹ 6,506 more rows</code></pre>
+ 1  0.23 Ideal E     SI2      61.5    55   326  3.95  3.98  2.43
+ 2  0.23 Good  E     VS1      56.9    65   327  4.05  4.07  2.31
+ 3  0.31 Good  J     SI2      63.3    58   335  4.34  4.35  2.75
+ 4  0.22 Fair  E     VS2      65.1    61   337  3.87  3.78  2.49
+ 5  0.3  Good  J     SI1      64      55   339  4.25  4.28  2.73
+ 6  0.23 Ideal J     VS1      62.8    56   340  3.93  3.9   2.46
+ 7  0.31 Ideal J     SI2      62.2    54   344  4.35  4.37  2.71
+ 8  0.3  Ideal I     SI2      62      54   348  4.31  4.34  2.68
+ 9  0.3  Good  J     SI1      63.4    54   351  4.23  4.29  2.7 
+10  0.3  Good  J     SI1      63.8    56   351  4.23  4.26  2.71
+# ℹ 28,057 more rows</code></pre>
 </div>
 </div>
 <p><strong>Au passage, vous venez de faire connaissance :</strong></p>
@@ -240,9 +243,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>avec la fonction <strong>c()</strong></p></li>
 </ul>
 <hr>
-<pre><code>Dans vos propres termes, décrivez ici en quelques lignes à quoi correspondent ces symbole :
+<section id="exercice-dacquisition" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-dacquisition">Exercice d’acquisition :</h3>
+<pre><code>Dans vos propres termes, décrivez ici en quelques lignes à quoi correspondent ces trois nouveaux éléments de code R :
 
-Le symbôle %&gt;%</code></pre>
+Le symbôle %&gt;% sert à brancher la sortie d'une fonction vers l'entrée d'une autre fonction
+
+
+
+Le symbôle %in% est un connecteur logique qui représente l'appartenance à un ensemble d'elements
+
+
+
+La fonction c() construit un vecteur à partir des elements en parametre</code></pre>
 <hr>
 <hr>
 </section>
@@ -251,26 +264,45 @@ Le symbôle %&gt;%</code></pre>
 <p>On peut appliquer un filtre sur n’importe quelle variable, même si elle n’est pas un facteur. On peut par exemple appliquer un filtre sur une variable numérique.</p>
 <p>Filtrez le tableau de données diamonds pour ne conserver que les diamants d’une valeur supérieure à 15 000$</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici :</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">filter</span>(price <span class="sc">&gt;</span> <span class="dv">15000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,655 × 10
+   carat cut       color clarity depth table price     x     y     z
+   &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  1.54 Premium   E     VS2      62.3    58 15002  7.31  7.39  4.58
+ 2  1.19 Ideal     F     VVS1     61.5    55 15005  6.82  6.84  4.2 
+ 3  2.1  Premium   I     SI1      61.5    57 15007  8.25  8.21  5.06
+ 4  1.69 Ideal     D     SI1      60.8    57 15011  7.69  7.71  4.68
+ 5  1.5  Very Good G     VVS2     62.9    56 15013  7.22  7.32  4.57
+ 6  1.73 Very Good G     VS1      62.8    57 15014  7.57  7.72  4.8 
+ 7  2.02 Premium   G     SI2      63      59 15014  8.05  7.95  5.03
+ 8  2.05 Very Good F     SI2      61.9    56 15017  8.13  8.18  5.05
+ 9  1.5  Very Good F     VS1      61.6    58 15022  7.35  7.43  4.55
+10  1.82 Very Good G     SI1      62.7    58 15025  7.68  7.75  4.84
+# ℹ 1,645 more rows</code></pre>
+</div>
 </div>
 <p><strong>Combien de diamants on un prix supérieur à 15 000$ ?</strong></p>
 <hr>
 </section>
-<section id="sélectionner-les-colonnes-dun-tableau" class="level3">
-<h3 class="anchored" data-anchor-id="sélectionner-les-colonnes-dun-tableau">1.1 Sélectionner les colonnes d’un tableau</h3>
+</section>
+<section id="sélectionner-les-colonnes-dun-tableau" class="level2">
+<h2 class="anchored" data-anchor-id="sélectionner-les-colonnes-dun-tableau">2 Sélectionner les colonnes d’un tableau</h2>
 <p>Le package Tidyverse fournit également une fonction très utile pour sélectionner les colonnes d’un tableau : la fonction <strong>select().</strong> Cette fonction permet par exemple de sélectionner :</p>
 <ul>
-<li><p>Une ou plusieurs colonnes par leur nom</p></li>
-<li><p>Toutes les colonnes sauf une ou plusieurs</p></li>
-<li><p>Toutes les colonnes commençant ou finissant par le même préfixe (resp. suffixe)</p></li>
-<li><p>Toutes les colonnes contenant une chaîne de caractère</p></li>
+<li><p>Une ou plusieurs colonnes <strong>par leur nom</strong></p></li>
+<li><p>Toutes les colonnes <strong>sauf une ou plusieurs</strong></p></li>
+<li><p>Toutes les colonnes <strong>commençant ou finissant par le même préfixe</strong> (resp. suffixe)</p></li>
+<li><p>Toutes les colonnes <strong>contenant une chaîne de caractère</strong></p></li>
 <li><p>etc. (voir toutes les possibilités dans l’aide de la fonction select)</p></li>
 </ul>
 <p>Voici quelques exemples :</p>
 <p><strong>Sélection d’un sous-ensemble de colonnes par leur nom</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Selection des colonnes Cut, Clarity et Price</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">select</span>(cut, clarity, price)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Selection des colonnes Cut, Clarity et Price</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">select</span>(cut, clarity, price)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 53,940 × 3
    cut       clarity price
@@ -287,12 +319,13 @@ Le symbôle %&gt;%</code></pre>
 10 Very Good VS1       338
 # ℹ 53,930 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remarque : les noms des colonnes ne sont pas entre guillemets</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remarque : les noms des colonnes ne sont pas entre guillemets</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Sélection de toutes les colonnes sauf certaines par leur nom :</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selection des colonnes Cut, Clarity et Price en utilisant le symbole -</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>cut, <span class="sc">-</span>clarity, <span class="sc">-</span>price)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selection des colonnes Cut, Clarity et Price en utilisant le symbole -</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>cut, <span class="sc">-</span>clarity, <span class="sc">-</span>price)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 53,940 × 7
    carat color depth table     x     y     z
@@ -309,8 +342,9 @@ Le symbôle %&gt;%</code></pre>
 10  0.23 H      59.4    61  4     4.05  2.39
 # ℹ 53,930 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selection des colonnes Cut, Clarity et Price en utilisant le symbole ! et la fonction c()</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(cut, clarity, price))  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selection des colonnes Cut, Clarity et Price en utilisant le symbole ! et la fonction c()</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(cut, clarity, price))  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 53,940 × 7
    carat color depth table     x     y     z
@@ -330,7 +364,9 @@ Le symbôle %&gt;%</code></pre>
 </div>
 <p><strong>Sélection de toutes les colonnes commençant par une chaîne de caractère donnée :</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"c"</span>)) <span class="co"># la chaine de caractère est entre guillements</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selection de toutes les colonnes commençant par la lettre "c"</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"c"</span>)) <span class="co"># la chaine de caractère est entre guillements</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 53,940 × 4
    carat cut       color clarity
@@ -347,6 +383,77 @@ Le symbôle %&gt;%</code></pre>
 10  0.23 Very Good H     VS1    
 # ℹ 53,930 more rows</code></pre>
 </div>
+</div>
+<hr>
+<hr>
+<section id="exercice-dapplication-1" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-dapplication-1">Exercice d’application :</h3>
+<p>A partir du dataset diamonds, créez un tableau contenant uniquement les dimensions (x,y et z) ainsi que le prix des diamants ayant une découpe (cut) idéale (Ideal)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Quelles sont les dimensions de ce nouveau jeu de données ?</strong></p>
+<hr>
+<hr>
+</section>
+<section id="ajouter-de-nouvelles-variables-à-un-tableau-de-données" class="level3">
+<h3 class="anchored" data-anchor-id="ajouter-de-nouvelles-variables-à-un-tableau-de-données"><strong>3 Ajouter de nouvelles variables à un tableau de données</strong></h3>
+<p>En analyse de données, il est fréquent d’avoir à calculer des variables intermédiaires, aussi appelée “features” en data mining. C’est notamment le cas lorsque les variables de départ nécessitent d’être combinées pour correspondre à une valeur intéressante du point de vue de l’analyse.</p>
+<p>Par exemple, le dataset diamonds donne la <strong>taille des diamants dans les trois dimensions de l’espace</strong> (variables x, y, z). Prises individuellement, ces variables ont peut d’intérêt. Il est en revanche possible de les combiner pour obtenir <strong>une estimation du volume des diamants</strong>.</p>
+<p>Ce que l’on souhaite ici, c’est calculer le volume estimatif des diamants et d’<strong>ajouter cette valeur au tableau de données</strong> pour pouvoir s’en servir par la suite. On utilise pour cela la fonction <strong>mutate()</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajout de la colonne "volume" au dataset diamonds avec la fonction mutate</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">volume =</span> x <span class="sc">*</span> y <span class="sc">*</span> z)  <span class="co">#le nom de la colonne n'est pas entre guillemets</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 53,940 × 11
+   carat cut       color clarity depth table price     x     y     z volume
+   &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+ 1  0.23 Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43   38.2
+ 2  0.21 Premium   E     SI1      59.8    61   326  3.89  3.84  2.31   34.5
+ 3  0.23 Good      E     VS1      56.9    65   327  4.05  4.07  2.31   38.1
+ 4  0.29 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63   46.7
+ 5  0.31 Good      J     SI2      63.3    58   335  4.34  4.35  2.75   51.9
+ 6  0.24 Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48   38.7
+ 7  0.24 Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47   38.8
+ 8  0.26 Very Good H     SI1      61.9    55   337  4.07  4.11  2.53   42.3
+ 9  0.22 Fair      E     VS2      65.1    61   337  3.87  3.78  2.49   36.4
+10  0.23 Very Good H     VS1      59.4    61   338  4     4.05  2.39   38.7
+# ℹ 53,930 more rows</code></pre>
+</div>
+</div>
+<p>On peut ensuite utiliser cette nouvelle colonne dans la suite des opérations, par exemple pour afficher le poids des diamants en fonction de l’estimation de leur volume :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatter plot du poids des diamants en fonction de leur volume</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">volume =</span> x <span class="sc">*</span> y <span class="sc">*</span> z) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span>                                  <span class="co"># Attention à ne pas confondre le + de ggplot et %&gt;%</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>volume, <span class="at">y =</span> carat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Module3---Manipulation_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>Quelquechose vous surprend dans le graphique obtenu ? A quoi est-ce dû selon vous ?</strong></p>
+<hr>
+<hr>
+</section>
+<section id="exercice-dapplication-2" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-dapplication-2">Exercice d’application :</h3>
+<p>A partir du dataset diamonds :</p>
+<ol type="1">
+<li><p>calculez le volume estimatif des diamants à part de leurs dimensions x, y et z</p></li>
+<li><p>filtrez (supprimez) les diamants ayant un volume inférieur à 10 mm3 ou supérieur à 1000 mm3</p></li>
+<li><p>visualiser le prix des diamants (price) en fonction de leur volume</p></li>
+<li><p>asservissez la couleur des points du graphique à la clarté (clarity) des diamants</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Quelle clarté de diamant est la plus appréciée des acheteurs ?</strong></p>
+<p>Proposez une visualisation plus claire pour illustrer cette tendance à l’aide de la géométrie histogramme vue précédemment.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
