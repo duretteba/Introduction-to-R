@@ -9,7 +9,3 @@ Welcome to my R programming course. Below are the links to the different modules
 
 Feel free to explore the modules and start learning!
 
-1. [Module 1: Introduction to R](https://duretteba.github.io/Introduction-to-R/Module1-Introduction.qmd)
-2. [Module 2: Visualisation](https://duretteba.github.io/Introduction-to-R/Module2-Visualisation.qmd)
-3. [Module 3: Data Manipulation](https://duretteba.github.io/Introduction-to-R/Module3-Manipulation.qmd)
-4. [Module 4: Advanced Topics](https://duretteba.github.io/Introduction-to-R/Module4-Manipulation.qmd)
