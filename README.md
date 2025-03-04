@@ -8,3 +8,4 @@ Welcome to my R programming course. Below are the links to the different modules
 4. [Module 4: Advanced Topics](https://duretteba.github.io/Introduction-to-R/Module4-Manipulation.html)
 
 Feel free to explore the modules and start learning!
+
