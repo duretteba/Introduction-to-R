@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Premiers pas avec R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Module2-Visualisation_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Module2-Visualisation_files/libs/quarto-html/quarto.js"></script>
+<script src="Module2-Visualisation_files/libs/quarto-html/popper.min.js"></script>
+<script src="Module2-Visualisation_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Module2-Visualisation_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Module2-Visualisation_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Module2-Visualisation_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Module2-Visualisation_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Module2-Visualisation_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Module2-Visualisation_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Premiers pas avec R</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<hr>
+<section id="visualisation-des-données" class="level1">
+<h1>Visualisation des données</h1>
+<hr>
+<section id="bienvenue-dans-ce-deuxième-module-de-la-formation-introduction-au-logiciel-r." class="level3">
+<h3 class="anchored" data-anchor-id="bienvenue-dans-ce-deuxième-module-de-la-formation-introduction-au-logiciel-r.">Bienvenue dans ce deuxième module de la formation “Introduction au logiciel R”.</h3>
+<p>Nous y verrons :</p>
+<ol type="1">
+<li><p><strong>Comment charger et utiliser la librairie de visualisation ggplot2 ?</strong></p></li>
+<li><p><strong>Comment réaliser et personnaliser des visualisations avec ggplot2 ?</strong></p></li>
+<li><p><strong>Comment utiliser une visualisation pour illustrer un phénomène ?</strong></p></li>
+</ol>
+<p>Dans ce module, vous apprendrez également à utiliser un type particulier de données dans R : <strong>les facteurs</strong></p>
+<hr>
+<hr>
+</section>
+<section id="charger-et-utiliser-la-librairie-ggplot2" class="level2">
+<h2 class="anchored" data-anchor-id="charger-et-utiliser-la-librairie-ggplot2">1-Charger et utiliser la librairie ggplot2</h2>
+<p>La communauté R a développé plusieurs miliers de librairies qui servent a démultiplier les possibilité du langage R (et à ne pas réinventer la roue).</p>
+<p>L’une des librairires les plus utilisées est la librairie ggplot2 qui sert a visualiser des données. Elle est particulièrement utilisée dans les publications scientifiques car <strong>hautement personnalisable.</strong></p>
+<p>1-Pour utiliser la librairie, il faut d’abord <strong>la télécharger sur le serveur du CRAN</strong> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Téléchargement de la librairie ggplot2</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Installation du package dans '/home/bdu/R/x86_64-pc-linux-gnu-library/4.4'
+(car 'lib' n'est pas spécifié)</code></pre>
+</div>
+</div>
+<p>2-Une fois la librairie installée, il faut <strong>la charger dans l’environnement de développement :</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chargement de la librairie ggplot2 dans l'environnement de développement</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<section id="exercice-dapplication" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-dapplication"><em>Exercice d’application :</em></h3>
+<p>Vérifiez que le package ggplot2 est bien chargé au moyen de la commande search()</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<hr>
+</section>
+</section>
+<section id="réaliser-et-personnaliser-une-visualisation-avec-la-librairie-ggplot2" class="level2">
+<h2 class="anchored" data-anchor-id="réaliser-et-personnaliser-une-visualisation-avec-la-librairie-ggplot2">2-Réaliser et personnaliser une visualisation avec la librairie ggplot2</h2>
+<p>ggplot2 propose un grand nombre de visualisations classiques : histogrammes, scatterplots, boites à moustache, etc. Les visualisations dans ggplot2 commencent par le préfixe “geom_”.</p>
+<p>Pour voir la liste de toutes les visualisations proposées par ggplot2, on peut utiliser la fonction apropos() qui cherche une chaîne de caractère dans l’aide de R</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recherche de toutes les visualisations geom_ du package ggplot2</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">apropos</span>(<span class="st">"geom_"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "geom_abline"            "geom_area"              "geom_bar"              
+ [4] "geom_bin_2d"            "geom_bin2d"             "geom_blank"            
+ [7] "geom_boxplot"           "geom_col"               "geom_contour"          
+[10] "geom_contour_filled"    "geom_count"             "geom_crossbar"         
+[13] "geom_curve"             "geom_density"           "geom_density_2d"       
+[16] "geom_density_2d_filled" "geom_density2d"         "geom_density2d_filled" 
+[19] "geom_dotplot"           "geom_errorbar"          "geom_errorbarh"        
+[22] "geom_freqpoly"          "geom_function"          "geom_hex"              
+[25] "geom_histogram"         "geom_hline"             "geom_jitter"           
+[28] "geom_label"             "geom_line"              "geom_linerange"        
+[31] "geom_map"               "geom_path"              "geom_point"            
+[34] "geom_pointrange"        "geom_polygon"           "geom_qq"               
+[37] "geom_qq_line"           "geom_quantile"          "geom_raster"           
+[40] "geom_rect"              "geom_ribbon"            "geom_rug"              
+[43] "geom_segment"           "geom_sf"                "geom_sf_label"         
+[46] "geom_sf_text"           "geom_smooth"            "geom_spoke"            
+[49] "geom_step"              "geom_text"              "geom_tile"             
+[52] "geom_violin"            "geom_vline"             "update_geom_defaults"  </code></pre>
+</div>
+</div>
+<p>Il est ensuite possible de demander des précisions sur chaque visualisation en utilisant l’aide de R :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Accès à l'aide pour la visualisation diagramme en bar de ggplot2</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(geom_bar)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ou alternativement</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>?geom_bar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<section id="exercice-dapplication-1" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-dapplication-1"><em>Exercice d’application :</em></h3>
+<p>Trouvez la fonction de ggplot permettant de creer un scatter plot (ensemble de points définis par leur coordonnées en absisse et en ordonnée). Affichez son aide.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+</section>
+<section id="le-dataset-plantgrowth-et-la-notion-de-facteur" class="level3">
+<h3 class="anchored" data-anchor-id="le-dataset-plantgrowth-et-la-notion-de-facteur">2.1 Le dataset PlantGrowth et la notion de facteur</h3>
+<p>Nous allons maintenant construire nos premières visualisations avec ggplot2.</p>
+<p>Pour cela, nous utiliserons le dataset PlantGrowth. Ce dataset vise à <strong>étudier l’influence d’un traitement (non communiqué) sur la croissance d’une plante.</strong> Pour cela, on mesure le poids total de la récolte selon que l’on a appliqué le traitement 1 ou le traitement 2 (ou pas de traitement).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Afficher les premières lignes du fichier "PlantGrowth"</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(PlantGrowth, <span class="at">n=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   weight group
+1    4.17  ctrl
+2    5.58  ctrl
+3    5.18  ctrl
+4    6.11  ctrl
+5    4.50  ctrl
+6    4.61  ctrl
+7    5.17  ctrl
+8    4.53  ctrl
+9    5.33  ctrl
+10   5.14  ctrl
+11   4.81  trt1
+12   4.17  trt1
+13   4.41  trt1
+14   3.59  trt1
+15   5.87  trt1
+16   3.83  trt1
+17   6.03  trt1
+18   4.89  trt1
+19   4.32  trt1
+20   4.69  trt1</code></pre>
+</div>
+</div>
+<p>Dans R, les données sont <strong>typées</strong>. On distingue par exemple les trois principaux types suivants :</p>
+<ol type="1">
+<li><p>les <strong>nombres réels</strong> (le plus fréquent) : double ou <strong>dbl</strong></p></li>
+<li><p>les <strong>chaînes de caractère</strong> : character ou <strong>chr</strong></p></li>
+<li><p>les <strong>facteurs</strong> : factor ou <strong>fctr</strong></p></li>
+</ol>
+<p>“Quatre” est par exemple considéré par R comme une chaîne de caractère et non comme un nombre.</p>
+<p>La notion de <strong>facteur</strong> correspond dans R à une <strong>variable de ventilation</strong>, c’est à dire une variable qui scinde le dataset en plusieurs groupes distincts, chaque ligne appartenant à un <strong>groupe donné</strong>. Il sera très utile par exemple dans la fonction “group_by” que nous verrons plus loin.</p>
+<p>Par exemple dans le dataset PlantGrowth, la variable group est un <strong>facteur</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pour vérifier qu'une variable est de type facteur, on utilise la commande is.factor()</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.factor</span>(PlantGrowth<span class="sc">$</span>group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>Il est souvent utile de connaître toutes les valeurs possibles d’un facteur. En langage statistique, cela revient à lister l<strong>’ensemble des modalités d’une variable</strong>. Lorsque la variable est de type facteur, on utilise la fonction <strong>levels</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage de l'ensemble des valeurs possibles de la variable group du dataset PlantGrowth</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(PlantGrowth<span class="sc">$</span>group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "ctrl" "trt1" "trt2"</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="exercice-dapplication-2" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-dapplication-2"><em>Exercice d’application :</em></h3>
+<p>Reprenez le dataset iris. Trouvez quelle variable du dataset est un facteur. Faites la liste de ses modalités.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<p>La variable groupe du dataset PlantGrowth contient trois modalités :</p>
+<ol type="1">
+<li><p><strong>ctrl</strong>, le groupe contrôle, <strong>sans traitement</strong></p></li>
+<li><p><strong>trt1</strong> : le groupe ayant reçu <strong>le traitement 1</strong></p></li>
+<li><p><strong>trt2</strong> : le groupe ayant reçu <strong>le traitement 2</strong></p></li>
+</ol>
+</section>
+<section id="première-visualisation-lhistogramme" class="level3">
+<h3 class="anchored" data-anchor-id="première-visualisation-lhistogramme">2.2 Première visualisation : l’histogramme</h3>
+<p>Dans un premier temps, nous allons nous interesser à la variable <strong>weight</strong> du dataset PlantGrowth. Un histogramme va nous permettre de voir comment <strong>le poids des récoltes est répartie</strong> : en terme statistiques, on parle de la <strong>distribution des valeurs</strong> de la variable.</p>
+<p>La librairie ggplot2 contient une visualisation en histogramme avec la fonction <strong>geom_histogram()</strong>. Elle fonctionne <strong>en couches que l’on ajoute progressivement avec le symbôle +</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisation en histogramme de la variable weigh du dataset PantGrowth</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(PlantGrowth) <span class="sc">+</span>             <span class="co"># la première couche définit le jeu de données à utiliser</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(weight)) <span class="co"># la deuxième couche définit la visualisation et la variable sur laquelle l'appliquer</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Module2-Visualisation_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>On modifie ensuite le graphique toujours sur le principe de <strong>couches successives</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisation en histogramme de la variable weigh du dataset PantGrowth</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(PlantGrowth) <span class="sc">+</span>                                             </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(weight), </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="st">"white"</span>,                                <span class="co"># on ajoute un contour blanc</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">bins =</span> <span class="dv">9</span>) <span class="sc">+</span>                                      <span class="co"># on ajuste le nombre d'intervalles (bins)</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span>                                                    <span class="co"># on ajoute un habillage "black and white"</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogramme des poids à sec des récoltes"</span>) <span class="sc">+</span>           <span class="co"># on ajoute un titre</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Poids à sec de la récolte"</span>,<span class="at">y =</span> <span class="st">"Nombre de mesures"</span>)  <span class="co"># on ajoute des etiquettes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Module2-Visualisation_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="exercice-dapplication-3" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-dapplication-3"><em>Exercice d’application :</em></h3>
+<p>Reprenez le dataset iris. Faites un histogramme de la variable Petal.Length. Personnalisez le thème, le titre et les étiquettes à votre convenance.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+</section>
+</section>
+<section id="utiliser-une-visualisation-pour-illustrer-un-phénomène" class="level2">
+<h2 class="anchored" data-anchor-id="utiliser-une-visualisation-pour-illustrer-un-phénomène">3-Utiliser une visualisation pour illustrer un phénomène</h2>
+<p><strong>Le diagramme ci-dessous permet-il de savoir si le traitement influence la croissance des plantes ?</strong></p>
+<p><img src="images/clipboard-984531557.png" class="img-fluid"></p>
+<section id="un-peu-desthétique" class="level3">
+<h3 class="anchored" data-anchor-id="un-peu-desthétique">3.1-Un peu d’esthétique</h3>
+<p>Pour y voir plus clair sur ce sujet, nous allons utiliser une fonctionnalité spécifique de la librairie ggplot : <strong>la notion d’esthétique</strong> (aesthetic) contrôler par la fonction <strong>aes().</strong></p>
+<ul>
+<li><p>L’esthétique peut être déclarée au tout début ou dans la couche ou elle est pertinente. Attention, chaque nouvelle déclaration écrase la précédente.</p></li>
+<li><p>La fonction d’esthétique permet d’<strong>asservir les paramètres du graphique</strong> (son esthétique) à certaines variables. En clair cela signifie que le paramètre esthétique choisit <strong>variera en fonction de la valeur de ce qu’il représente.</strong></p></li>
+<li><p><strong>La couleur de remplissage sert souvent de paramètre esthétique pour représenter différents groupes</strong>, ou plus spécifiquement dans R : <strong>un facteur</strong>. Dans ggplot, le paramètre esthétique correspondant à la couleur de remplissage se nomme “fill”.</p></li>
+</ul>
+<p>On peut donc associer une couleur de remplissage au facteur de notre choix. Ici nous choisirons le facteur “group” qui correspond au traitement donné à la plante</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Utilisation de l'ésthétique "fill" pour représenter le facteur "Traitement"</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(PlantGrowth) <span class="sc">+</span>                                             </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">fill =</span> group), <span class="co"># le parametre fill est ajouté dans la fonction aes()</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="st">"white"</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">bins =</span> <span class="dv">9</span>) <span class="sc">+</span>                 </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span>                                                    </span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogramme des poids à sec des récoltes"</span>) <span class="sc">+</span>          </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Poids à sec de la récolte"</span>, <span class="at">y =</span> <span class="st">"Nombre de mesures"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Module2-Visualisation_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Question : peut-on discerner une influence du traitement sur la croissance de la plante ?</strong></p>
+</section>
+<section id="ajustement-du-graphique" class="level3">
+<h3 class="anchored" data-anchor-id="ajustement-du-graphique">3.2-Ajustement du graphique</h3>
+<p>En fonction de ce que vous cherchez à montrer, vous aurez probablement a ajuster <strong>certain parametres secondaires</strong>. Ces parametres secondaires sont mentionnés dans l’aide de la fonction. Cela dit, il est parfois plus simple de poser la question dans un moteur de recherche.</p>
+<p>Dans le cas nous allons nous interesser à la <strong>position des barres de l’histogramme</strong> les unes par rapport aux autres. Cette position est controlée par le paramètre “position” qui est par défaut égale à “stack”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustement de la position des barres pour renforcer la lisibilité du graphe</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(PlantGrowth) <span class="sc">+</span>                                             </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">fill =</span> group), </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="st">"white"</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">bins =</span> <span class="dv">9</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span>                 <span class="co"># parametre contrôlant la position des barres de l'histogramme</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span>                                                    </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogramme des poids à sec des récoltes"</span>) <span class="sc">+</span>          </span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Poids à sec de la récolte"</span>, <span class="at">y =</span> <span class="st">"Nombre de mesures"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Module2-Visualisation_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="exercice-dapplication-4" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-dapplication-4"><em>Exercice d’application :</em></h3>
+<p>A l’aide de l’aide et/ou d’internet, trouvez les quatre valeurs possibles pour le parametre <strong>position.</strong> Sélectionnez celui qui vous parait le plus approprié pour illustrer l’effet du traitement sur la croissance de la plante.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modifiez le code ci-dessous :</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(PlantGrowth) <span class="sc">+</span>                                             </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">fill =</span> group), </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="st">"white"</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">bins =</span> <span class="dv">9</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">position =</span> <span class="st">"stack"</span>) <span class="sc">+</span>                 <span class="co"># parametre contrôlant la position des barres de l'histogramme</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span>                                                    </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogramme des poids à sec des récoltes"</span>) <span class="sc">+</span>          </span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Poids à sec de la récolte"</span>, <span class="at">y =</span> <span class="st">"Nombre de mesures"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Module2-Visualisation_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<hr>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>4-Conclusion</h1>
+<p>Dans ce module, nous avons vu comment utiliser la librairie graphique ggplot2 pour créer des visualisations avec R.</p>
+<ul>
+<li><p>Nous avons découvert au passage la notion de <strong>facteur</strong></p></li>
+<li><p>Nous avons compris la logique de <strong>programmation en couches successives</strong> utilisée par ggplot</p></li>
+<li><p>Nous avons vu comment <strong>personnaliser un graphique</strong> pour le rendre plus attrayant</p></li>
+<li><p>Nous avons vu comment <strong>asservir un ou plusieurs parametres du graphique aux données</strong> pour mieux illustrer un phénomène</p></li>
+</ul>
+<hr>
+<section id="exercice-dapplication-final" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-dapplication-final">Exercice d’application final :</h3>
+<p>A l’aide du package ggplot2 et du dataset PlantGrowth, reproduisez le schema ci-desous correspondant à des boîtes à moustache (boxplot en anglais)</p>
+<p><img src="images/clipboard-2580280418.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecrivez votre code ici : </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-copyright"><h2 class="anchored quarto-appendix-heading">Copyright</h2><div class="quarto-appendix-contents"><div>Barthélémy DURETTE 2024 tous droits réservés</div></div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

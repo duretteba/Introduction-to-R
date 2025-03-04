@@ -1,0 +1,133 @@
+---
+title: "Module 5"
+author: "Barthélémy Durette 2025 tous droits réservés"
+format: html
+editor: visual
+---
+
+## Charger un fichier de donnée .csv ou excel
+
+------------------------------------------------------------------------
+
+### Bienvenue dans ce cinquième module de la formation "Introduction au logiciel R".
+
+Nous y verrons :
+
+1.  **Comment charger un fichier de données au format .csv avec R ?**
+
+2.  **Comment charger un fichier de données au format excel avec R ?**
+
+Nous utiliserons pour cela le package **tidyverse** et le package **readxl**
+
+```{r}
+require(tidyverse)
+require(readxl)
+```
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+## 1-Charger un fichier de données au format .csv
+
+Le fichier **.csv** (pour Comma Separated Values) est un format extremement courant lorsqu'il s'agit de stocker des **données de type tableau**. Dans ce fichier, lisible avec un simple editeur de texte, **les données sont écrites lignes par lignes sous forme de valeurs séparées par des virgules** (ou point-virgule). La première ligne, en anglais le **header**, contient les noms de variables, autrement dit les intitulés de colonne.
+
+**Exemple : les 10 premières lignes du fichier ronfle.csv**
+
+```         
+"","AGE","POIDS","TAILLE","ALCOOL","SEXE","RONFLE","TABA","PDS","agestd","alcool","alcool2"
+"1","47","71","158","0","1","N","O","0.6667","-0.462394463139037","0","0"
+"2","56","58","164","7","1","O","N","0.6667","0.327273500476016","3","3"
+"3","46","116","208","3","1","N","O","0.6667","-0.550135347985154","1","1"
+"4","70","96","186","3","1","N","O","0.6667","1.55564588832165","1","1"
+"5","51","91","195","2","1","O","O","0.6667","-0.111430923754569","1","1"
+"6","46","98","188","0","2","N","N","2","-0.550135347985154","0","0"
+"7","40","112","193","5","1","N","O","0.6667","-1.07658065706186","2","2"
+"8","46","77","165","0","2","N","N","2","-0.550135347985154","0","0"
+"9","49","76","164","0","1","N","N","0.6667","-0.286912693446803","0","0"
+```
+
+***Quel autre caractère a ici été utilisé pour séparer les valeurs ? Pourquoi ?***
+
+Pour lire un fichier .csv on peut utiliser la fonction **read.csv()** disponible dans la librairie de base de R ou la fonction **read_csv()** disponible dans le package tidyverser et compatible avec le "pipe".
+
+Import avec la fonction read.csv() :
+
+```{r}
+# Import du fichier ronfle.csv avec read.csv()
+ronfle <- read.csv("ronfle.csv")
+
+# Aperçu du fichier
+head(ronfle)
+```
+
+Import avec la fonction read_csv :
+
+```{r}
+
+# Import du fichier ronfle.csv avec read.csv()
+ronfle_tidy <- read_csv("ronfle.csv")
+
+# Aperçu du fichier
+head(ronfle_tidy)
+```
+
+*Quelles différences voyez-vous dans la sortie de **read.csv()** versus **read_csv()** ?*
+
+**Les paramètres de la fonction permettent de vous adapter aux spécificités de votre fichier .csv.** Changeons par exemple les virgules en point-virgules dans le fichier "ronfle.csv" pour créer le fichier "ronfle_pv.csv"
+
+**10 premières lignes du fichier ronfle_pv.csv :**
+
+```         
+"";"AGE";"POIDS";"TAILLE";"ALCOOL";"SEXE";"RONFLE";"TABA";"PDS";"agestd";"alcool";"alcool2"
+"1";"47";"71";"158";"0";"1";"N";"O";"0.6667";"-0.462394463139037";"0";"0"
+"2";"56";"58";"164";"7";"1";"O";"N";"0.6667";"0.327273500476016";"3";"3"
+"3";"46";"116";"208";"3";"1";"N";"O";"0.6667";"-0.550135347985154";"1";"1"
+"4";"70";"96";"186";"3";"1";"N";"O";"0.6667";"1.55564588832165";"1";"1"
+"5";"51";"91";"195";"2";"1";"O";"O";"0.6667";"-0.111430923754569";"1";"1"
+"6";"46";"98";"188";"0";"2";"N";"N";"2";"-0.550135347985154";"0";"0"
+"7";"40";"112";"193";"5";"1";"N";"O";"0.6667";"-1.07658065706186";"2";"2"
+"8";"46";"77";"165";"0";"2";"N";"N";"2";"-0.550135347985154";"0";"0"
+"9";"49";"76";"164";"0";"1";"N";"N";"0.6667";"-0.286912693446803";"0";"0"
+```
+
+Pour lire ce nouveau fichier, il faudra préciser dans les paramètres de la fonction que le séparateur entre les valeurs est un point-virgule :
+
+```{r}
+# import du fichier ronfle_pv.csv avec read.csv
+ronfle_pv <- read.csv("ronfle_pv.csv", 
+                      sep = ";")
+
+
+# import du fichier ronfle_pv.csv avec tidyverse
+ronfle_pv_tidy <- read_delim("ronfle_pv.csv",
+                            delim = ";")
+```
+
+## 2-Charger un fichier de données au format excel
+
+Pour charger des données au format excel, on utilisera ici la fonction **read_xlsx()** disponible dans le package readxl. Dans le cas d'un fichier excel, il n'y a pas de variation possible dans le format. Il est en revanche possible de sélectionner l'onglet dans lequel on veut lire les données.
+
+```{r}
+# lecture du fichier "ronfle.xlsx" avec la fonction read_xslx
+
+ronfle_xlsx <- read_xlsx("ronfle.xlsx",
+                         sheet = 1) 
+```
+
+### *Exercice d'application :*
+
+Avec l'aide de votre binôme, chargez vos propres données à partir d'un fichier csv ou excel :
+
+```{r}
+# Ecrivez votre code ici :
+
+
+
+```
+
+------------------------------------------------------------------------
+
+## 
+
+------------------------------------------------------------------------
